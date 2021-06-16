@@ -22,3 +22,5 @@ Auth::routes();
   Route::get('/home', 'HomeController@index')->name('home');
 
   Route::get('/customer', 'HomeController@customer')->name('customer');
+  Route::get('/customer-contract', 'HomeController@customer_contract')->name('customer.contract');
+  Route::get('/customer/create-new', 'HomeController@customer_create')->name('customer.create');
