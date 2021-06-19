@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','ข้อมูลลูกค้า')
+@section('title','ข้อมูลพนักงาน')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -30,8 +30,8 @@
         </div> -->
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('customer.index') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"> ข้อมูลลูกค้า </li>
+            <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
+            <li class="breadcrumb-item active"> ข้อมูลพนักงาน </li>
           </ol>
         </div>
       </div>
@@ -44,10 +44,10 @@
 
       <div class="row">
         <div class="col-md-12 text-center">
-          <a href="{{ route('customer.create') }}">
+          <a href="{{ route('our.create') }}">
             <button type="button" class="btn btn-info float-right" style=" height: 50px; padding:10px 40px;">
               <i class="fas fa-plus-circle"></i>
-                เพิ่มข้อมูลลูกค้า
+                เพิ่มข้อมูลพนักงาน
             </button>
           </a>
 
@@ -61,22 +61,19 @@
         <div class="col-md-12">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title"> <i class="fas fa-building"></i> <b>ข้อมูลลูกค้า / บริษัท</b></h3>
+              <h3 class="card-title"> <i class="fas fa-id-card"></i> <b>ข้อมูลพนักงาน</b></h3>
             </div>
 
             <div class="card-body">
               <div class="table-responsive hover">
                 <table id="example1" class="table table-bordered table-striped table-reponsive table-sm">
-                  <thead class="text-nowrap" style="background-color: #FFFAF0;">
+                  <thead class="text-nowrap" style="background-color: #F0F8FF;">
                     <tr>
                       <th class="text-nowrap" style="text-align: center"> ลำดับ </th>
-                      <th class="text-nowrap" style="text-align: center"> ชื่อลูกค้า / บริษัท </th>
-                      <th class="text-nowrap" style="text-align: center"> รหัสลูกค้า </th>
-                      <th class="text-nowrap" style="text-align: center"> ประเภท </th>
-                      <th class="text-nowrap" style="text-align: center"> ข้อมูลการติดต่อ </th>
-                      <th class="text-nowrap" style="text-align: center"> วันที่วางบิล </th>
-                      <th class="text-nowrap" style="text-align: center"> วันที่รับเช็ค </th>
-                      <th class="text-nowrap" style="text-align: center"> สถานะลูกค้า </th>
+                      <th class="text-nowrap" style="text-align: center"> ชื่อ - สกุล </th>
+                      <th class="text-nowrap" style="text-align: center"> ตำแหน่ง </th>
+                      <th class="text-nowrap" style="text-align: center"> ฝ่าย / แผนก </th>
+                      <th class="text-nowrap" style="text-align: center"> เบอร์ติดต่อ </th>
                       <th class="text-nowrap" style="text-align: center"> Action </th>
                     </tr>
                   </thead>
@@ -85,31 +82,21 @@
                     @php
                       $i = 1;
                     @endphp
-                      @foreach($customer as $value)
+                      @foreach($data as $value)
                       <tr>
                         <td class="text-nowrap" style="text-align: center"> {{ $i }} </td>
-                        <td> {{ $value->customer_name }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ $value->customer_code }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::Get_Customer_type($value->customer_type)['customer_type'] }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ $value->telephone }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::DateThai($value->billing_date) }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::DateThai($value->check_date) }} </td>
-                        <td class="text-nowrap" style="text-align: center">
-                          @if($value->status == NULL)
-                            <span class="badge bg-success badge-pill"> Active </span>
-                          @elseif($value->status == "1")
-                            <span class="badge bg-secondary badge-pill"> Inactive </span>
-                          @endif
-                          </td>
-
+                        <td class="text-nowrap" style="text-align: center"> {{ $value->name_th." ".$value->lname_th }} </td>
+                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::Get_Position($value->position)['position'] }} </td>
+                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::Get_Departments($value->departments)['departments'] }} </td>
+                        <td class="text-nowrap text-primary" style="text-align: center"> {{ $value->telephone }} </td>
                         <td class="text-nowrap" style="text-align: center">
                         <!-- Details -->
-                        <button type="button" class="btn btn-warning btn-md" title="Details" data-toggle="modal" data-target="#AddModal">
-                          <i class="fas fa-edit"></i>
-                        </button>
+                          <button type="button" class="btn btn-warning btn-md" title="Details" data-toggle="modal" data-target="#AddModal">
+                            <i class="fas fa-edit"></i>
+                          </button>
                         <!-- END Details -->
-
                         </td>
+
 
 
                               <!-- MODAL -->
@@ -135,6 +122,7 @@
                                 <!-- /.modal-dialog -->
                               </div>
                               <!-- END MODAL -->
+
 
 
                       </tr>

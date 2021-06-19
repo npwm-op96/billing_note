@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','ข้อมูลสัญญาลูกค้า')
+@section('title','สัญญาเช่าลูกค้า')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -30,80 +30,113 @@
         </div> -->
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('customer') }}"> ข้อมูลลูกค้า </a></li>
-            <li class="breadcrumb-item active"> สร้างข้อมูลลูกค้า </li>
+            <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('customer.index') }}"> ข้อมูลลูกค้า </a></li>
+            <li class="breadcrumb-item active"> สัญญาเช่าลูกค้า </li>
           </ol>
         </div>
       </div>
     </div><!-- /.container-fluid -->
   </section>
 
+
   <!-- Main content -->
-
-
-
-
-
-
-
-
-
-
   <section class="content">
-    <div class="container">
+    <div class="container-fluid">
 
-
+      <!-- DATA TABLE -->
       <div class="row">
-              <!-- left column -->
-              <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Quick Example</h3>
-                  </div>
-                  <!-- /.card-header -->
-                  <!-- form start -->
-                  <form>
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputFile">File input</label>
-                        <div class="input-group">
-                          <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                          </div>
-                          <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                      </div>
-                    </div>
-                    <!-- /.card-body -->
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title"> <i class="fas fa-building"></i> <b>สัญญาเช่าของลูกค้า</b></h3>
+            </div>
 
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                  </form>
-                </div>
-                  </div>
-                    </div>
-                <!-- /.card -->
+            <div class="card-body">
+              <div class="table-responsive hover">
+                <table id="example1" class="table table-bordered table-striped table-reponsive table-sm">
+                  <thead class="text-nowrap" style="background-color: #FFFAF0;">
+                    <tr>
+                      <th class="text-nowrap" style="text-align: center"> ลำดับ </th>
+                      <th class="text-nowrap" style="text-align: center"> รหัสลูกค้า </th>
+                      <th class="text-nowrap" style="text-align: center"> ชื่อลูกค้า / บริษัท </th>
+                      <th class="text-nowrap" style="text-align: center"> เลขที่สัญญา </th>
+                      <th class="text-nowrap" style="text-align: center"> ประเภทสัญญา </th>
+                      <th class="text-nowrap" style="text-align: center"> วันที่ส่งเครื่อง </th>
+                      <th class="text-nowrap" style="text-align: center"> วันที่สิ้นสุด </th>
+                      <th class="text-nowrap" style="text-align: center"> Action </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    @php
+                      $i = 1;
+                    @endphp
+                    @foreach($customer_contract as $value)
+                      <tr>
+                        <td> {{ $i }} </td>
+                        <td class="text-center"> {{ $value->customer_code }} </td>
+                        <td> {{ $value->customer_name }} </td>
+                        <td class="text-center text-primary"> {{ $value->contract_number }} </td>
+                        <td class="text-center">
+                           @if($value->contract_type == "1")
+                           <span class="badge badge-pill" style="background-color: #ff851b;"> {{ $contract_type [ $value->contract_type ] }} </span>
+                            @elseif($value->contract_type == "2")
+                              <span class="badge badge-pill" style="background-color: #ff851b;"> {{ $contract_type [ $value->contract_type ] }} </span>
+                            @else <!-- status == รอตรวจสอบ [Default] -->
+                               <span class="badge bg-danger badge-pill"> ยังไม่ได้ระบุ </span>
+                            @endif
+                        </td>
+                        <td class="text-center"> {{ CmsHelper::DateThai($value->start_contract) }} </td>
+                        <td class="text-center"> {{ CmsHelper::DateThai($value->end_contract) }} </td>
+
+                        <td class="text-nowrap" style="text-align: center">
+                        <!-- Details -->
+                        <button type="button" class="btn btn-warning btn-md" title="Details" data-toggle="modal" data-target="#AddModal">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <!-- END Details -->
+
+                        </td>
 
 
+                              <!-- MODAL -->
+                              <div class="modal fade" id="AddModal">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title">Large Modal</h4>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>One fine body&hellip;</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                  </div>
+                                  <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                              </div>
+                              <!-- END MODAL -->
 
+
+                      </tr>
+                      @php
+                        $i++;
+                      @endphp
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Col DataTable -->
+      </div> <!-- Row DataTable -->
 
 
 

@@ -310,6 +310,23 @@ class CmsHelper
     );
   }
 
+  public static function Get_Customer_type($customer_id)
+  {
+    $query = Customer_type::find($customer_id);
+    $id = 0;
+    $customer_type = '';
+    if (!empty($query)) {
+      $id = $query->id;
+      $customer_type = $query->customer_type;
+    }
+    //--------------------------
+    return array(
+      "id"             => $id,
+      "customer_type"  => $customer_type,
+    );
+  }
+
+
 
 
   public static function Get_Icon_Notify($module_name)

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','เพิ่มข้อมูลลูกค้าใหม่')
+@section('title','เพิ่มข้อมูลพนักงานใหม่')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -30,29 +30,19 @@
         </div> -->
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('customer.index') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('customer.index') }}"> รายละเอียดลูกค้า </a></li>
-            <li class="breadcrumb-item active"> เพิ่มข้อมูลลูกค้าใหม่ </li>
+            <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
+            <li class="breadcrumb-item active"> ข้อมูลพนักงาน </li>
+            <li class="breadcrumb-item active"> เพิ่มข้อมูลพนักงานใหม่ </li>
           </ol>
         </div>
       </div>
     </div><!-- /.container-fluid -->
   </section>
 
+
   <!-- Main content -->
-
-
-
-
-
-
-
-
-
-
   <section class="content">
     <div class="container">
-
 
       <div class="row">
               <!-- left column -->

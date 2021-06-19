@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','เพิ่มข้อมูลลูกค้าใหม่')
+@section('title','เพิ่มข้อมูลเครื่องพิมพ์ / อุปกรณ์')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -30,29 +30,19 @@
         </div> -->
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('customer.index') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('customer.index') }}"> รายละเอียดลูกค้า </a></li>
-            <li class="breadcrumb-item active"> เพิ่มข้อมูลลูกค้าใหม่ </li>
+            <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
+            <li class="breadcrumb-item active"> ข้อมูลพนักงาน </li>
+            <li class="breadcrumb-item active"> เพิ่มข้อมูลอุปกรณ์ใหม่ </li>
           </ol>
         </div>
       </div>
     </div><!-- /.container-fluid -->
   </section>
 
+
   <!-- Main content -->
-
-
-
-
-
-
-
-
-
-
   <section class="content">
     <div class="container">
-
 
       <div class="row">
               <!-- left column -->
@@ -60,7 +50,7 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title">Quick Example</h3>
+                    <h3 class="card-title"> เพิ่มข้อมูลเครื่องพิมพ์ / อุปกรณ์ </h3>
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->

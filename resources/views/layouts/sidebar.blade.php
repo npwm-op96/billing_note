@@ -16,7 +16,7 @@
   <!-- Brand Logo -->
   <a href="#" class="brand-link">
     <img src="{{ asset('img/TTS_LOGO.jpg') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light"> Billing Note </span>
+    <span class="brand-text font-weight-light"> DATA CENTER </span>
   </a>
 
   <!-- Sidebar -->
@@ -26,30 +26,30 @@
     <nav class="mt-3">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-        <li class="nav-item @ifActiveRoute(['home','copy_machine','price']) menu-open @endIfActiveRoute">
+        <li class="nav-item @ifActiveRoute('our.*') menu-open @endIfActiveRoute">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p> ข้อมูลหลัก : บริษัท </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('home') }}" class="nav-link {{ Active::check('home') }} ">
+              <a href="{{ route('our.home') }}" class="nav-link {{ active_route('our.home') }} ">
                 <i class="far fa-circle nav-icon text-warning"></i>
-                <p> พนักงาน </p>
+                <p> ข้อมูลพนักงาน </p>
               </a>
             </li>
           </ul>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{-- route('copy_machine') --}}" class="nav-link {{-- Active::check('copy_machine') --}} ">
+              <a href="{{ route('our.machine_copy') }}" class="nav-link {{ active_route('our.machine_copy') }} ">
                 <i class="far fa-circle nav-icon text-warning"></i>
-                <p> เครื่องถ่ายเอกสาร </p>
+                <p> ข้อมูลเครื่องพิมพ์ / อุปกรณ์  </p>
               </a>
             </li>
           </ul>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{-- route('price') --}}" class="nav-link {{-- Active::check('price') --}} ">
+              <a href="{{ route('our.price') }}" class="nav-link {{ active_route('our.price') }} ">
                 <i class="far fa-circle nav-icon text-warning"></i>
                 <p> เรทราคา </p>
               </a>
@@ -58,28 +58,29 @@
         </li>
 
 
-        <li class="nav-item @ifActiveRoute(['customer','customer.contract']) menu-open @endIfActiveRoute">
+        <li class="nav-item @ifActiveRoute('customer.*') menu-open @endIfActiveRoute">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-user-check"></i>
             <p> ข้อมูลหลัก : ลูกค้า </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('customer') }}" class="nav-link {{ Active::check('customer') }} ">
+              <a href="{{ route('customer.index') }}" class="nav-link {{ active_route('customer.index') }} ">
                 <i class="far fa-circle nav-icon text-warning"></i>
-                <p> รายละเอียด </p>
+                <p> ข้อมูลลูกค้า </p>
               </a>
             </li>
           </ul>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{-- route('customer.contract') --}}" class="nav-link {{-- Active::check('customer.contract') --}} ">
+              <a href="{{ route('customer.contract') }}" class="nav-link {{ active_route('customer.contract') }}  ">
                 <i class="far fa-circle nav-icon text-warning"></i>
-                <p> สัญญา / ข้อตกลง </p>
+                <p> สัญญาเช่าลูกค้า </p>
               </a>
             </li>
           </ul>
         </li>
+
 
       </ul>
     </nav>

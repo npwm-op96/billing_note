@@ -13,14 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return view('Auth.login');
+    return view('auth.login');
 })->name('login');
 
 // dd(Auth::check());
 Auth::routes();
 
-  Route::get('/home', 'HomeController@index')->name('home');
+  Route::get('/home', 'HomeController@index')->name('our.home');
+  Route::get('/employee/create-new', 'HomeController@employee_create')->name('our.create');
 
-  Route::get('/customer', 'HomeController@customer')->name('customer');
+  Route::get('/price', 'HomeController@price_rate')->name('our.price');
+  Route::get('/machine-copy', 'HomeController@machine_copy')->name('our.machine_copy');
+  Route::get('/machine/create-new', 'HomeController@machine_copy_create')->name('our.machine_copy_create');
+
+
+  Route::get('/customer', 'HomeController@customer')->name('customer.index');
   Route::get('/customer-contract', 'HomeController@customer_contract')->name('customer.contract');
-  Route::get('/customer/create-new', 'HomeController@customer_create')->name('customer.create');
+  Route::post('/customer/create-new', 'HomeController@customer_create')->name('customer.create');

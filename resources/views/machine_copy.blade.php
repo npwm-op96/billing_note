@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','ข้อมูลพนักงาน')
+@section('title','ข้อมูลเครื่องพิมพ์ / อุปกรณ์')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -30,13 +30,14 @@
         </div> -->
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"> ข้อมูลพนักงาน </li>
+            <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
+            <li class="breadcrumb-item active"> ข้อมูลเครื่องพิมพ์ / อุปกรณ์ </li>
           </ol>
         </div>
       </div>
     </div><!-- /.container-fluid -->
   </section>
+
 
   <!-- Main content -->
   <section class="content">
@@ -44,10 +45,10 @@
 
       <div class="row">
         <div class="col-md-12 text-center">
-          <a href="{{-- route('create.customer', [ 'id' => $value->id ]) --}}">
+          <a href="{{ route('our.machine_copy_create') }}">
             <button type="button" class="btn btn-info float-right" style=" height: 50px; padding:10px 40px;">
               <i class="fas fa-plus-circle"></i>
-                เพิ่มข้อมูลพนักงาน
+                เพิ่มข้อมูลอุปกรณ์ใหม่
             </button>
           </a>
 
@@ -55,26 +56,27 @@
       </div>
       <br>
 
-
       <!-- DATA TABLE -->
       <div class="row">
         <div class="col-md-12">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title"> <i class="fas fa-id-card"></i> <b>ข้อมูลพนักงาน</b></h3>
+              <h3 class="card-title"> <i class="fas fa-id-card"></i> <b>ข้อมูลเครื่องพิมพ์ / อุปกรณ์</b></h3>
             </div>
 
             <div class="card-body">
               <div class="table-responsive hover">
-                <table id="example1" class="table table-bordered table-striped table-reponsive table-sm">
+                <table id="example5" class="table table-bordered table-striped table-reponsive table-sm">
                   <thead class="text-nowrap" style="background-color: #F0F8FF;">
                     <tr>
-                      <th class="text-nowrap" style="text-align: center"> ลำดับ </th>
-                      <th class="text-nowrap" style="text-align: center"> ชื่อ - สกุล </th>
-                      <th class="text-nowrap" style="text-align: center"> ตำแหน่ง </th>
-                      <th class="text-nowrap" style="text-align: center"> ฝ่าย / แผนก </th>
-                      <th class="text-nowrap" style="text-align: center"> เบอร์ติดต่อ </th>
-                      <th class="text-nowrap" style="text-align: center"> Action </th>
+                      <th class="text-center"> ลำดับ </th>
+                      <th class="text-center"> Serial No. </th>
+                      <th class="text-center"> หมายเลข DNO </th>
+                      <th class="text-center"> ยี่ห้อ </th>
+                      <th class="text-center"> รุ่น </th>
+                      <th class="text-center"> สถานะ DNO </th>
+                      <th class="text-center"> ประเภทอุปกรณ์ </th>
+                      <th class="text-center"> B&W / Colour </th>
                     </tr>
                   </thead>
 
@@ -82,49 +84,22 @@
                     @php
                       $i = 1;
                     @endphp
-                      @foreach($data as $value)
+                    @foreach($data_machine as $value)
                       <tr>
-                        <td class="text-nowrap" style="text-align: center"> {{ $i }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ $value->name_th." ".$value->lname_th }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::Get_Position($value->position)['position'] }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::Get_Departments($value->departments)['departments'] }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ $value->name }} </td>
-                        <td class="text-nowrap" style="text-align: center">
-                        <!-- Details -->
-                          <button type="button" class="btn btn-warning btn-md" title="Details" data-toggle="modal" data-target="#AddModal">
-                            <i class="fas fa-edit"></i>
-                          </button>
-                        <!-- END Details -->
+                        <td class="text-center"> {{ $i }} </td>
+                        <td class="text-center text-danger"> {{ $value->serial_no }} </td>
+                        <td class="text-center text-primary"> {{ $value->dno_number }} </td>
+                        <td class="text-center"> {{ $value->brands }} </td>
+                        <td class="text-center"> {{ $value->model }} </td>
+                        <td class="text-center"> {{ $value->dno_status }} </td>
+                        <td class="text-center"> {{ $value->type_of_machine }} </td>
+                        <td class="text-center">
+                          @if($value->type_color_x_bk =="Colour")
+                            <span class="badge bg-danger badge-pill"> Colour </span>
+                          @elseif($value->type_color_x_bk == "B&W")
+                            <span class="badge bg-secondary badge-pill"> Black & White </span>
+                          @endif
                         </td>
-
-
-
-                              <!-- MODAL -->
-                              <div class="modal fade" id="AddModal">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title">Large Modal</h4>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p>One fine body&hellip;</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                  </div>
-                                  <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                              </div>
-                              <!-- END MODAL -->
-
-
-
                       </tr>
                       @php
                         $i++;
@@ -174,14 +149,14 @@
 
 <script>
   $(function() {
-    $("#example1").DataTable({
+    $("#example5").DataTable({
       "responsive": true,
       "lengthChange": false,
       "autoWidth": false,
       "searching": true,
       // "buttons": ["excel", "print"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
+    $('#example6').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
