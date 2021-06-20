@@ -34,7 +34,7 @@
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="{{ route('our.home') }}" class="nav-link {{ active_route('our.home') }} ">
-                <i class="far fa-circle nav-icon text-warning"></i>
+                <i class="far fa-circle nav-icon text-info"></i>
                 <p> ข้อมูลพนักงาน </p>
               </a>
             </li>
@@ -42,7 +42,7 @@
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="{{ route('our.machine_copy') }}" class="nav-link {{ active_route('our.machine_copy') }} ">
-                <i class="far fa-circle nav-icon text-warning"></i>
+                <i class="far fa-circle nav-icon text-info"></i>
                 <p> ข้อมูลเครื่องพิมพ์ / อุปกรณ์  </p>
               </a>
             </li>
@@ -50,7 +50,7 @@
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="{{ route('our.price') }}" class="nav-link {{ active_route('our.price') }} ">
-                <i class="far fa-circle nav-icon text-warning"></i>
+                <i class="far fa-circle nav-icon text-info"></i>
                 <p> เรทราคา </p>
               </a>
             </li>

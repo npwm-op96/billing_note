@@ -264,17 +264,17 @@ class CmsHelper
 
   public static function Get_UserID($user_id)
   {
-    $query = User::find($user_id);
+    $query = Users::find($user_id);
     $id = 0;
-    $user_pm = '';
+    $name_th = '';
     if (!empty($query)) {
-      $id = $query->id;
-      $user_pm = $query->name;
+      $id         = $query->id;
+      $name_th  = $query->name_th;
     }
     //--------------------------
     return array(
-      "id"      => $id,
-      "user_pm" => $user_pm,
+      "id"        => $id,
+      "create_by" => $name_th,
     );
   }
 

@@ -28,5 +28,14 @@ Auth::routes();
 
 
   Route::get('/customer', 'HomeController@customer')->name('customer.index');
+  Route::get('/customer/create-new', 'HomeController@customer_create')->name('customer.create');
+  // --- INSERT ---
+  Route::post('/customer/create-insert', 'HomeController@customer_insert')->name('customer.insert');
+  Route::get('/FindDistrict', 'HomeController@findDistrict');
+  Route::get('/FindSubDistrict', 'HomeController@findSubDistrict');
+
+  // --- EDIT ---
+  Route::get('/customer/edit/{id}', 'HomeController@customer_edit')->name('customer.edit');
+
+
   Route::get('/customer-contract', 'HomeController@customer_contract')->name('customer.contract');
-  Route::post('/customer/create-new', 'HomeController@customer_create')->name('customer.create');
