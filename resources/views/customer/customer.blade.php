@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="{{ asset('/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+<!-- DatePicker Style -->
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css">
 <!-- SweetAlert2 -->
 <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 
@@ -48,7 +50,7 @@
       <div class="row">
         <div class="col-md-12 text-center">
           <a href="{{ route('customer.create') }}">
-            <button type="button" class="btn btn-info float-right" style=" height: 50px; padding:10px 40px;">
+            <button type="button" class="btn btn-danger float-right" style=" height: 50px; padding:10px 40px;">
               <i class="fas fa-plus-circle"></i>
                 เพิ่มข้อมูลลูกค้า
             </button>
@@ -70,7 +72,7 @@
             <div class="card-body">
               <div class="table-responsive hover">
                 <table id="example1" class="table table-bordered table-striped table-reponsive table-sm">
-                  <thead class="text-nowrap" style="background-color: #FFFAF0;">
+                  <thead class="text-nowrap" style="background-color: #FFF9F9;">
                     <tr>
                       <th class="text-nowrap" style="text-align: center"> ลำดับ </th>
                       <th class="text-nowrap" style="text-align: center"> ชื่อลูกค้า / บริษัท </th>
@@ -88,7 +90,7 @@
                     @php
                       $i = 1;
                     @endphp
-                      @foreach($customer as $value)
+                      @foreach($table_customer as $value)
                       <tr>
                         <td class="text-nowrap" style="text-align: center"> {{ $i }} </td>
                         <td> {{ $value->customer_name }} </td>
@@ -107,22 +109,30 @@
 
                         <td class="text-nowrap" style="text-align: center">
                           <!-- View -->
-                          <button type="button" class="btn btn-info btn-md" title="Details" data-toggle="modal" data-target="#CustomerModal{{ $value->id }}">
-                            <i class="fas fa-bars"></i>
-                          </button>
+                            <button type="button" class="btn btn-info btn-md" title="Details" data-toggle="modal" data-target="#CustomerModal{{ $value->id }}">
+                              <i class="fas fa-bars"></i>
+                            </button>
                           <!-- END View -->
 
-                          <!-- Details -->
+                          <!-- Edit -->
                           <a href="{{ route('customer.edit', [ 'id' => $value->id ]) }}">
                             <button type="button" class="btn btn-warning btn-md" title="Edit">
                               <i class="fas fa-edit"></i>
                             </button>
                          </a>
-                         <!-- END Details -->
+                         <!-- END Edit -->
+
+                         <!-- ADD Contract -->
+                         <a href="{{ route('customer_contract.create', [ 'id' => $value->id ]) }}">
+                           <button type="button" class="btn btn-md" style="background-color: #ff851b;" title="Add">
+                             <i class="fas fa-plus-circle"></i>
+                           </button>
+                          </a>
+                         <!-- END ADD Contract -->
                         </td>
 
 
-                              <!-- MODAL -->
+                              <!-- MODAL for View -->
                               <div class="modal fade" id="CustomerModal{{ $value->id }}">
                                 <div class="modal-dialog modal-dialog-centered">
                                   <div class="modal-content">
@@ -134,35 +144,31 @@
                                     </div>
                                     <div class="modal-body">
 
-                                      <p> <b>ชื่อลูกค้า / บริษัท</b> : {{$value->customer_name}} </p>
-                                    <hr>
-                                      <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
-                                    <hr>
-                                      <p> <b>ประเภท</b> : {{ CmsHelper::Get_Customer_type($value->customer_type)['customer_type'] }} </p>
-                                    <hr>
-                                      <p> <b><font color = "red">วันที่วางบิล</font></b> : {{ CmsHelper::DateThai($value->billing_date) }} </p>
-                                    <hr>
-                                      <p> <b><font color = "blue">วันที่รับเช็ค</font></b> : {{ CmsHelper::DateThai($value->check_date) }} </p>
-                                    <hr>
-                                      <p> <b>ผู้ติดต่อ/ผู้ประสาน</b> : {{ $value->contact }} </p>
-                                    <hr>
-                                      <p> <b>ข้อมูลการติดต่อ</b> : {{ $value->telephone }} </p>
-                                    <hr>
-                                      <p> <b>ที่อยู่</b> : {{ $value->telephone }} </p>
+                                        <p> <b>ชื่อลูกค้า / บริษัท</b> : {{$value->customer_name}} </p>
                                       <hr>
-                                        <p> <b>ผู้บันทึกข้อมูล</b> : {{ CmsHelper::Get_UserID($value->create_by)['create_by'] }} </p>
+                                        <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
+                                      <hr>
+                                        <p> <b>ประเภท</b> : {{ CmsHelper::Get_Customer_type($value->customer_type)['customer_type'] }} </p>
+                                      <hr>
+                                        <p> <b>เครดิตลูกค้า</b> : {{ $value->credit_term }} วัน</p>
+                                      <hr>
+                                        <p> <b><font color = "red">วันที่วางบิล</font></b> : {{ CmsHelper::DateThai($value->billing_date) }} <b>ถึง</b> {{ CmsHelper::DateThai($value->billing_date_2) }} </p>
+                                      <hr>
+                                        <p> <b><font color = "blue">วันที่รับเช็ค</font></b> : {{ CmsHelper::DateThai($value->check_date) }} </p>
+                                      <hr>
+                                        <p> <b>ชื่อผู้ติดต่อ/ผู้ประสาน</b> : {{ $value->contact }} </p>
+                                      <hr>
+                                        <p> <b>ข้อมูลการติดต่อ</b> : {{ $value->telephone }} </p>
+                                      <hr>
+                                        <p> <b>ผู้บันทึกข้อมูล</b> : {{ CmsHelper::Get_UserID($value->create_by)['create_by'] }} <font color = "red">( {{ CmsHelper::DateThai($value->created_at) }} | เวลา {{ CmsHelper::TimeThai($value->created_at) }} น. ) </font></p>
 
                                       <!-- <button type="button" class="btn btn-primary float-right"> บันทึกข้อมูล </button> -->
                                     </div>
-
-                                    <!-- <div class="modal-footer"> -->
-                                      <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                                      <!-- <button type="button" class="btn btn-primary"> บันทึกข้อมูล </button> -->
-                                    <!-- </div> -->
                                   </div>
                                 </div>
                               </div>
-                              <!-- END MODAL -->
+                              <!-- END MODAL for View -->
+
 
 
                       </tr>
@@ -179,10 +185,6 @@
       </div> <!-- Row DataTable -->
 
 
-
-
-
-
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
@@ -192,7 +194,6 @@
 
 
 @section('custom-js-script')
-
 <!-- DataTables  & Plugins -->
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -232,7 +233,6 @@
 
 
 @section('custom-js')
-
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -246,12 +246,10 @@
             title: 'บันทึกข้อมูลเรียบร้อยแล้ว',
             showConfirmButton: false,
             // confirmButtonColor: '#3085d6',
-            timer: 2000
+            timer: 2200
         })
       </script>
     @endif
     <!-- END INSERT success -->
-
-
 
 @stop

@@ -12,10 +12,10 @@ use Auth;
 use App\Users;
 use App\Position;
 use App\Customer;
+use App\Customer_contract;
 use App\Customer_type;
 use App\Machine_copy;
-// use Carbon\Carbon;
-
+use Carbon\Carbon;
 
 
 class HomeController extends Controller
@@ -39,13 +39,17 @@ class HomeController extends Controller
 
 // -------------------- CUSTOMER.* --------------------
 
-    public function customer()
+    public function customer(Request $request)
     {
-      $customer = Customer::all();
+      $table_customer = Customer::all();
+
+      // $edit = Customer::where('id', $request->id)->first();
+
+
+      // dd($saleman);
 
       return view('customer.customer',[
-        'customer'        =>  $customer,
-        // 'customer_type' =>  $customer_type
+        'table_customer'  =>  $table_customer,
       ]);
     }
 
@@ -77,30 +81,29 @@ class HomeController extends Controller
     public function customer_insert(Request $request)
     {
 
-      $data_post = [
+      $data_customer = [
         "customer_code"  =>  $request->customer_code,
         "customer_name"  =>  $request->customer_name,
         "customer_type"  =>  $request->customer_type,
+        "credit_term"    =>  $request->credit_term,
         "telephone"      =>  $request->telephone,
         "customer_email" =>  $request->customer_email,
         "area_zone"      =>  $request->area_zone,
         "address"        =>  $request->address,
         "province_id"    =>  $request->province_id,
-
         "district_id"    =>  $request->district_id,
         "sub_district_id" =>  $request->sub_district_id,
         "zip_code"       =>  $request->zip_code,
-
         "contact"        =>  $request->contact,
         "billing_date"   =>  $request->billing_date,
         "billing_date_2" =>  $request->billing_date_2,
         "check_date"     =>  $request->check_date,
         "create_by"      =>  Auth::user()->id,
+        "created_at"     =>  Carbon::now(),
       ];
-
       // dd($data_post);
 
-      $insert = Customer::insertGetId($data_post);
+      $insert = Customer::insertGetId($data_customer);
 
         if($insert){
           session()->put('messages', 'okkkkkayyyyy');
@@ -109,8 +112,6 @@ class HomeController extends Controller
           return redirect()->back()->with('Errorrr');
         }
     }
-
-
 
 
     public function customer_edit(Request $request)
@@ -134,12 +135,17 @@ class HomeController extends Controller
                                        'customer.customer_code',
                                        'contract_rental.customer_id',
                                        'contract_rental.contract_number',
+                                       'contract_rental.contract_type',
+                                       'contract_rental.carry_contract',
                                        'contract_rental.start_contract',
                                        'contract_rental.end_contract',
-                                      'contract_rental.contract_type'
-                                        )
+                                       'contract_rental.contract_type',
+                                       'contract_rental.create_by',
+                                       'contract_rental.created_at',
+                                      )
+                              // ->groupby('customer.id', $request->id)
                               ->get();
-                              // dd($customer_contract);
+                  // dd($customer_contract);
 
       $contract_type = [ 1 => 'LEASING',
                          2 => 'PURCHURE',
@@ -153,6 +159,65 @@ class HomeController extends Controller
         ]);
     }
 
+
+    public function customer_contract_create(Request $request)
+    {
+
+      $data = Customer::where('id' , $request->id)->first();
+
+      $saleman = Users::where('departments', 1)->get();
+
+      $contract_types = [ 1 => 'LEASING',
+                         2 => 'PURCHURE',
+                         3 => 'RENTAL',
+                         4 => 'Payment By Installments',
+                       ];
+
+
+      return view('customer.customer_contract_create',[
+        'data'            =>  $data,
+        'saleman'            =>  $saleman,
+        'contract_types'  => $contract_types
+      ]);
+    }
+
+
+    public function customer_contract_insert(Request $request)
+    {
+
+      $data_contract = [
+        "customer_id"        =>  $request->id, //from CUSTOMER table
+        "salesman_id"        =>  $request->salesman_id, //from USERS table
+        "contract_number"    =>  $request->contract_number,
+        "carry_contract"     =>  $request->carry_contract,
+        "start_contract"     =>  $request->start_contract,
+        "end_contract"       =>  $request->end_contract,
+        "contract_type"      =>  $request->contract_type,
+        "cycle_meter_date_1" =>  $request->cycle_meter_date_1,
+        "cycle_meter_date_2" =>  $request->cycle_meter_date_2,
+        "create_by"          =>  Auth::user()->id,
+        "created_at"         =>  Carbon::now(),
+      ];
+      // dd($data_contract);
+
+      $insert = Customer_contract::insertGetId($data_contract);
+
+        if($insert){
+          session()->put('contract', 'okkkkkayyyyy');
+          return redirect()->route('customer.contract', $request->id)->with('Okayyyyy');
+        }else{
+          return redirect()->back()->with('Errorrr');
+        }
+    }
+
+
+    public function customer_contract_edit(Request $request)
+    {
+
+        $customer = Customer_contract::first();
+
+        return view('customer.customer_contract_edit');
+    }
 
 
 

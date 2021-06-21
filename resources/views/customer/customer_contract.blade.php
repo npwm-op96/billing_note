@@ -31,7 +31,6 @@
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('customer.index') }}"> ข้อมูลลูกค้า </a></li>
             <li class="breadcrumb-item active"> สัญญาเช่าลูกค้า </li>
           </ol>
         </div>
@@ -44,6 +43,20 @@
   <section class="content">
     <div class="container-fluid">
 
+      <!-- <div class="row">
+        <div class="col-md-12 text-center">
+          <a href="{{-- route('customer_contract.create') --}}">
+            <button type="button" class="btn btn-danger float-right" style=" height: 50px; padding:10px 40px;">
+              <i class="fas fa-plus-circle"></i>
+                เพิ่มข้อมูลสัญญา
+            </button>
+          </a>
+
+        </div>
+      </div>
+      <br> -->
+
+
       <!-- DATA TABLE -->
       <div class="row">
         <div class="col-md-12">
@@ -55,7 +68,7 @@
             <div class="card-body">
               <div class="table-responsive hover">
                 <table id="example1" class="table table-bordered table-striped table-reponsive table-sm">
-                  <thead class="text-nowrap" style="background-color: #FFFAF0;">
+                  <thead class="text-nowrap" style="background-color: #FFF9F9;">
                     <tr>
                       <th class="text-nowrap" style="text-align: center"> ลำดับ </th>
                       <th class="text-nowrap" style="text-align: center"> รหัสลูกค้า </th>
@@ -63,7 +76,8 @@
                       <th class="text-nowrap" style="text-align: center"> เลขที่สัญญา </th>
                       <th class="text-nowrap" style="text-align: center"> ประเภทสัญญา </th>
                       <th class="text-nowrap" style="text-align: center"> วันที่ส่งเครื่อง </th>
-                      <th class="text-nowrap" style="text-align: center"> วันที่สิ้นสุด </th>
+                      <th class="text-nowrap" style="text-align: center"> วันที่เริ่มต้นสัญญา </th>
+                      <th class="text-nowrap" style="text-align: center"> วันที่สิ้นสุดสัญญา </th>
                       <th class="text-nowrap" style="text-align: center"> Action </th>
                     </tr>
                   </thead>
@@ -80,49 +94,65 @@
                         <td class="text-center text-primary"> {{ $value->contract_number }} </td>
                         <td class="text-center">
                            @if($value->contract_type == "1")
-                           <span class="badge badge-pill" style="background-color: #ff851b;"> {{ $contract_type [ $value->contract_type ] }} </span>
-                            @elseif($value->contract_type == "2")
-                              <span class="badge badge-pill" style="background-color: #ff851b;"> {{ $contract_type [ $value->contract_type ] }} </span>
-                            @else <!-- status == รอตรวจสอบ [Default] -->
+                              <span class="badge badge-pill" style="background-color: #B0C4DE;"> {{ $contract_type [ $value->contract_type ] }} </span>
+                           @elseif($value->contract_type == "2")
+                              <span class="badge badge-pill" style="background-color: #B0C4DE;"> {{ $contract_type [ $value->contract_type ] }} </span>
+                           @elseif($value->contract_type == "3")
+                              <span class="badge badge-pill" style="background-color: #B0C4DE;"> {{ $contract_type [ $value->contract_type ] }} </span>
+                           @elseif($value->contract_type == "4")
+                              <span class="badge badge-pill" style="background-color: #B0C4DE;"> {{ $contract_type [ $value->contract_type ] }} </span>
+                           @else <!-- status == Default -->
                                <span class="badge bg-danger badge-pill"> ยังไม่ได้ระบุ </span>
-                            @endif
+                           @endif
                         </td>
+                        <td class="text-center"> {{ CmsHelper::DateThai($value->carry_contract) }} </td>
                         <td class="text-center"> {{ CmsHelper::DateThai($value->start_contract) }} </td>
                         <td class="text-center"> {{ CmsHelper::DateThai($value->end_contract) }} </td>
+                        <td class="text-center">
+                          <!-- View -->
+                              <button type="button" class="btn btn-info btn-md" title="Details" data-toggle="modal" data-target="#ContractModal{{ $value->id }}">
+                                <i class="fas fa-bars"></i>
+                              </button>
+                          <!-- END View -->
 
-                        <td class="text-nowrap" style="text-align: center">
-                        <!-- Details -->
-                        <button type="button" class="btn btn-warning btn-md" title="Details" data-toggle="modal" data-target="#AddModal">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <!-- END Details -->
-
+                          <!-- Edit -->
+                            <a href="{{ route('customer_contract.edit', [ 'id' => $value->id ]) }}">
+                              <button type="button" class="btn btn-warning btn-md" title="Edit">
+                                <i class="fas fa-edit"></i>
+                              </button>
+                            </a>
+                         <!-- END Edit -->
                         </td>
 
 
-                              <!-- MODAL -->
-                              <div class="modal fade" id="AddModal">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title">Large Modal</h4>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p>One fine body&hellip;</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                  </div>
-                                  <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
+                        <!-- MODAL for View -->
+                        <div class="modal fade" id="ContractModal{{ $value->id }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title"><b> ข้อมูลลูกค้า ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
                               </div>
-                              <!-- END MODAL -->
+                              <div class="modal-body">
+
+                                  <p> <b>ชื่อลูกค้า / บริษัท</b> : {{$value->customer_name}} </p>
+                                <hr>
+                                  <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
+                                <hr>
+                                  <p> <font color = "blue"><b>ประเภทของสัญญา</font></b> : {{ $contract_type [$value->contract_type] }} </p>
+                                <hr>
+                                  <p> <b><font color = "red">เลขที่สัญญา</font></b> : {{ $value->contract_number }} </p>
+                                <hr>
+                                  <p> <b>ผู้บันทึกข้อมูล</b> : {{ CmsHelper::Get_UserID($value->create_by)['create_by'] }} <font color = "red">( {{ CmsHelper::DateThai($value->created_at) }} | เวลา {{ CmsHelper::TimeThai($value->created_at) }} น. ) </font></p>
+
+                                <!-- <button type="button" class="btn btn-primary float-right"> บันทึกข้อมูล </button> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- END MODAL for View -->
 
 
                       </tr>
@@ -167,11 +197,6 @@
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
-@stop
-
-
-@section('custom-js')
-
 <script>
   $(function() {
     $("#example1").DataTable({
@@ -192,5 +217,29 @@
     });
   });
 </script>
+
+@stop
+
+
+@section('custom-js')
+
+<!-- SWEET ALERT -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+  <!-- INSERT success -->
+    @if(Session::get('contract'))
+     <?php Session::forget('contract'); ?>
+      <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'บันทึกข้อมูลเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            // confirmButtonColor: '#3085d6',
+            timer: 2200
+        })
+      </script>
+    @endif
+    <!-- END INSERT success -->
 
 @stop

@@ -64,7 +64,7 @@ class CmsHelper
     $strMonthCut = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
     $strWeekThai = $strMonthWeek[$strWeek];
     $strMonthThai = $strMonthCut[$strMonth];
-    return "ประจำวัน" . $strWeekThai . "ที่ " . $strDay . " " . $strMonthThai . " " . $strYear;
+    return "วัน" . $strWeekThai . "ที่ " . $strDay . " " . $strMonthThai . " " . $strYear;
   }
 
   public static function TimeThai($strTime)

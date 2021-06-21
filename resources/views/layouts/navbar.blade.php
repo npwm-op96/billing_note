@@ -22,7 +22,7 @@
 
         <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                <b> {{ Auth::user()->username }} </b>
+                <b> คุณ {{ Auth::user()->username }} </b>
             </a>
 
 

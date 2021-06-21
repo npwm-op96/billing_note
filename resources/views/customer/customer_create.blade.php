@@ -8,6 +8,8 @@
 @section('custom-css-script')
 <!-- DatePicker Style -->
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css">
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 
 @stop
 
@@ -22,7 +24,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row mb-2">
         <!-- <div class="col-sm-6">
           <h1>General Form</h1>
@@ -38,16 +40,8 @@
     </div><!-- /.container-fluid -->
   </section>
 
+
   <!-- Main content -->
-
-
-
-
-
-
-
-
-
 
   <section class="content">
     <div class="container">
@@ -57,9 +51,9 @@
 
             <div class="row">
               <div class="col-md-12">
-                <div class="card card-warning">
-                  <div class="card-header">
-                    <h3 class="card-title"><b> เพิ่มข้อมูลลูกค้าใหม่ </b></h3>
+                <div class="card shadow">
+                  <div class="card-header" style="background-color: #FFF9F9;">
+                    <h3 class="card-title"><b><i class="fas fa-plus-circle"></i> เพิ่มข้อมูลลูกค้าใหม่ </b></h3>
                   </div>
 
                   <div class="card-body">
@@ -106,7 +100,7 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="exampleInputEmail1"> LINE ID </label>
-                          <input type="text" class="form-control" name="line" placeholder="Line" required>
+                          <input type="text" class="form-control" name="line" placeholder="Line">
                         </div>
                       </div>
                     </div>
@@ -124,43 +118,34 @@
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-3" id="province_div">
                         <div class="form-group">
-                          <label for="exampleInputEmail1"> จังหวัด </label>
-                          <select class="form-control" id="province_id" name="province_id" required>
-                                <option value="" disabled="true" selected="true">กรุณาเลือก</option>
-                              @foreach($ref_province as $key => $value)
-                                <option value="{{ $key }}">{{$value}}</option>
-                              @endforeach
-                          </select>
-                          <!-- <input type="text" class="form-control" name="province" required> -->
+                          <label> จังหวัด </label>
+                            <a class="one small-box-footer" href="#"> (คำอธิบาย) </a>
+                              <select class="form-control" id="province_id" name="province_id" required>
+                                    <option value="" disabled="true" selected="true">กรุณาเลือก</option>
+                                  @foreach($ref_province as $key => $value)
+                                    <option value="{{ $key }}">{{$value}}</option>
+                                  @endforeach
+                              </select>
                         </div>
                       </div>
 
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="exampleInputEmail1"> เขต/อำเภอ </label>
-                          <select class="form-control" id="district_id" name="district_id" >
-                              {{--  <option value="" disabled="true" selected="true">กรุณาเลือก</option>
-                              @foreach($ref_district as $key => $value)
-                                <option value="{{ $key }}">{{$value}}</option>
-                              @endforeach  --}}
+                      <div class="col-md-3" id="district_div">
+                        <div class="form-group district_id">
+                          <label> เขต/อำเภอ </label>
+                          <select class="form-control" id="district_id" name="district_id" required>
+                               <option value="" disabled="true" selected="true">กรุณาเลือก</option>
                           </select>
-
-                          <!-- <input type="text" class="form-control" name="district" required> -->
                         </div>
                       </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="exampleInputEmail1"> แขวง/ตำบล </label>
-                          <select class="form-control" id="sub_district_id" name="sub_district_id"  >
-                          {{--  <option value="" disabled="true" selected="true">กรุณาเลือก</option>
-                                @foreach($ref_sub_district as $key => $value)
-                                <option value="{{ $key }}">{{$value}}</option>
-                              @endforeach --}}
-                          </select>
 
-                          <!-- <input type="text" class="form-control" name="sub_district" required> -->
+                      <div class="col-md-3" id="sub_district_div">
+                        <div class="form-group sub_district_id">
+                          <label> แขวง/ตำบล </label>
+                          <select class="form-control" id="sub_district_id" name="sub_district_id" required>
+                              <option value="" disabled="true" selected="true">กรุณาเลือก</option>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -177,29 +162,42 @@
                     <div class="row">
                       <div class="col-md-3">
                         <div class="form-group">
-                          <label for="exampleInputEmail1"> ผู้ติดต่อ/ผู้ประสาน <font color="red"> * </font></label>
+                          <label for="exampleInputEmail1"> ชื่อผู้ติดต่อ <font color="red"> * </font></label>
                           <input type="text" class="form-control" name="contact" required>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="exampleInputEmail1"> วันที่วางบิล (ตั้งแต่) <font color="red"> * </font></label>
-                          <input type="text" class="form-control" name="billing_date" id="datepicker1" placeholder="กรุณาเลือก ปี/เดือน/วัน" required>
+                          <input type="text" class="form-control" name="billing_date" id="datepicker1" placeholder="กรุณาเลือก ปี/เดือน/วัน" autocomplete="off" required>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="exampleInputEmail1"> วันที่วางบิล (จนถึง) </label>
-                          <input type="text" class="form-control" name="billing_date_2" id="datepicker2" placeholder="กรุณาเลือก ปี/เดือน/วัน" required>
+                          <input type="text" class="form-control" name="billing_date_2" id="datepicker2" placeholder="กรุณาเลือก ปี/เดือน/วัน" autocomplete="off" required>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="exampleInputEmail1"> วันที่รับเช็ค <font color="red"> * </font></label>
-                          <input type="text" class="form-control" name="check_date" id="datepicker3" placeholder="กรุณาเลือก ปี/เดือน/วัน" required>
+                          <input type="text" class="form-control" name="check_date" id="datepicker3" placeholder="กรุณาเลือก ปี/เดือน/วัน" autocomplete="off" required>
                         </div>
                       </div>
                     </div>
+
+                    <div class="row">
+                      <div class="col-md-3">
+                        <strong> เครดิตลูกค้า </strong>
+                          <div class="input-group">
+                            <input type="text" class="form-control" name="credit_term" placeholder="จำนวนวัน" maxlength="3" onkeypress='validate(event)'>
+                              <div class="input-group-append">
+                                <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+
 
                   </div> <!-- END card-body -->
 
@@ -234,7 +232,6 @@
   var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     $('#datepicker1').datepicker({
         uiLibrary: 'bootstrap4',
-        // iconsLibrary: 'fontawesome',
         format: 'yyyy/mm/dd',
         // maxDate: today,
         autoclose: true,
@@ -243,7 +240,6 @@
     })
     $('#datepicker2').datepicker({
         uiLibrary: 'bootstrap4',
-        // iconsLibrary: 'fontawesome',
         format: 'yyyy/mm/dd',
         // maxDate: today,
         autoclose: true,
@@ -251,7 +247,6 @@
     });
     $('#datepicker3').datepicker({
         uiLibrary: 'bootstrap4',
-        // iconsLibrary: 'fontawesome',
         format: 'yyyy/mm/dd',
         // maxDate: today,
         autoclose: true,
@@ -260,6 +255,17 @@
 </script>
 <!-- END DatePicker Style -->
 
+
+<!-- SWEET ALERT -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script type="text/javascript">
+  document.querySelector(".one").addEventListener('click', function(){
+    Swal.fire("Notice !!",
+    "คุณจำเป็นต้องเลือกจังหวัดก่อนเสมอ <br> เพื่อให้ระบบฯ แสดงอำเภอและตำบลตามลำดับ.."
+    );
+  });
+</script>
 
 @stop
 
@@ -326,20 +332,7 @@
                   });
                 });
 
-
         });
-
-
-            $( function() {
-                $( "#date_inform" ).datepicker({dateFormat:'dd-mm-yy'}).datepicker("setDate",new Date());
-                $( "#date_start" ).datepicker({
-                    dateFormat:'dd-mm-yy'
-                });
-                $( "#date_end" ).datepicker({
-                    dateFormat:'dd-mm-yy'
-                });
-            } );
-
 
 </script>
 
