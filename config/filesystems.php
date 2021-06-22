@@ -48,6 +48,13 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'billing_data' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/file_upload'),
+            'url' => env('APP_URL').'/storage',
+        ],
+
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\CmsHelper as CmsHelper;
+use App\Exceptions\Handler;
+use Storage;
+use File;
 use DB;
 use Auth;
 use App\Users;
@@ -15,7 +18,7 @@ use App\Customer;
 use App\Customer_contract;
 use App\Customer_type;
 use App\Machine_copy;
-use Carbon\Carbon;
+// use Carbon\Carbon;
 
 
 class HomeController extends Controller
@@ -63,13 +66,15 @@ class HomeController extends Controller
 
       $region = DB::table('ref_region')->get();
 
-      // dd(Auth::user()->id);
+      $monthly = DB::table('ref_monthly')->get();
+      // dd($monthly);
 
 
       return view('customer.customer_create',[
         'customer'        =>  $customer,
         'customer_type'   =>  $customer_type,
         'region'          =>  $region,
+        'monthly'         =>  $monthly,
         'ref_province'    =>  $this->arr_ref_province(),
         'ref_district'    =>  $this->arr_ref_district(),
         'ref_sub_district' =>  $this->arr_ref_sub_district(),
@@ -82,30 +87,64 @@ class HomeController extends Controller
     {
 
       $data_customer = [
-        "customer_code"  =>  $request->customer_code,
-        "customer_name"  =>  $request->customer_name,
-        "customer_type"  =>  $request->customer_type,
-        "credit_term"    =>  $request->credit_term,
-        "telephone"      =>  $request->telephone,
-        "customer_email" =>  $request->customer_email,
-        "area_zone"      =>  $request->area_zone,
-        "address"        =>  $request->address,
-        "province_id"    =>  $request->province_id,
-        "district_id"    =>  $request->district_id,
+        "customer_code"   =>  $request->customer_code,
+        "customer_name"   =>  $request->customer_name,
+        "customer_type"   =>  $request->customer_type,
+        "tax_identify"    =>  $request->tax_identify,
+        "credit_term"     =>  $request->credit_term,
+        "area_zone"        =>  $request->area_zone,
+        "address"         =>  $request->address,
+        "province_id"     =>  $request->province_id,
+        "district_id"     =>  $request->district_id,
         "sub_district_id" =>  $request->sub_district_id,
-        "zip_code"       =>  $request->zip_code,
-        "contact"        =>  $request->contact,
-        "billing_date"   =>  $request->billing_date,
-        "billing_date_2" =>  $request->billing_date_2,
-        "check_date"     =>  $request->check_date,
-        "create_by"      =>  Auth::user()->id,
-        "created_at"     =>  Carbon::now(),
+        "zip_code"        =>  $request->zip_code,
+// ---------------------------------------------------------
+        "telephone"       =>  $request->telephone,
+        "telephone_2"     =>  $request->telephone_2,
+        "telephone_3"      =>  $request->telephone_3,
+        "customer_email"  =>  $request->customer_email,
+        "customer_email_2" =>  $request->customer_email_2,
+        "customer_email_3" =>  $request->customer_email_3,
+        "line"             =>  $request->line,
+        "line_2"           =>  $request->line_2,
+        "line_3"           =>  $request->line_3,
+        "contact"          =>  $request->contact,
+        "contact_2"        =>  $request->contact_2,
+        "contact_3"        =>  $request->contact_3,
+// ---------------------------------------------------------
+        "weekly_billing"   =>  $request->weekly_billing,
+        "monthly_billing"  =>  $request->monthly_billing,
+        "billing_date"     =>  $request->billing_date,
+        "billing_date_2"   =>  $request->billing_date_2,
+// ---------------------------------------------------------
+        "weekly_check"     =>  $request->weekly_check,
+        "monthly_check"    =>  $request->monthly_check,
+        "check_date"       =>  $request->check_date,
+        "check_date_2"     =>  $request->check_date_2,
+// ---------------------------------------------------------
+        "remark"          =>  $request->remark,
+        "files"           =>  $request->files,
+        "create_by"       =>  Auth::user()->id,
+        "created_at"      =>  date('Y-m-d H:i:s')
       ];
-      // dd($data_post);
+      // dd($data_customer);
 
-      $insert = Customer::insertGetId($data_customer);
+      //  --  UPLOAD FILE  --
+    if ($request->file('files')->isValid()) {
+          //TAG input [type=file] ดึงมาพักไว้ในตัวแปรที่ชื่อ files
+        $file=$request->file('files');
+          //ตั้งชื่อตัวแปร $file_name เพื่อเปลี่ยนชื่อ + นามสกุลไฟล์
+        $name='file_'.date('dmY_His');
+        $file_name = $name.'.'.$file->getClientOriginalExtension();
+          // upload file ไปที่ PATH : public/file_upload
+        $path = $file->storeAs('public/file_upload',$file_name);
+        $data_customer['files'] = $file_name;
+    }
 
-        if($insert){
+
+      $output = Customer::insert($data_customer);
+
+        if($output){
           session()->put('messages', 'okkkkkayyyyy');
           return redirect()->route('customer.index', $request->id)->with('Okayyyyy');
         }else{
@@ -329,6 +368,34 @@ class HomeController extends Controller
       $ref_sub_district=DB::table('ref_sub_district')->select('sub_district_id','sub_district_name')->where('district_id',$request->district_id) ->get();
       return response()->json($ref_sub_district);
     }
+
+
+
+
+    //  -- DOWNLOAD --
+    public function DownloadFile(Request $request){
+      $query = DB::table('customer')
+                    ->select('id', 'files')
+                    ->where('id', $request->id)
+                    ->first();
+
+      if(!$query){
+        return view('error-page.error404');
+      }
+
+      $path = $query->files;
+
+      // return Storage::disk('research')->download($path);
+
+      if(Storage::disk('billing_data')->exists($path)) {
+        return Storage::disk('billing_data')->download($path);
+      }else {
+        return view('error-page.error405');
+      }
+
+    }
+    //  -- END DOWNLOAD --
+
 
 
 }

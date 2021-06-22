@@ -38,6 +38,9 @@ Auth::routes();
   Route::get('/FindSubDistrict', 'HomeController@findSubDistrict');
   // --- EDIT ---
   Route::get('/customer/edit/{id}', 'HomeController@customer_edit')->name('customer.edit');
+  //  -- DOWNLOAD --
+  Route::get('/Download-Files/customer/{id}/{files}','ResearchController@DownloadFile')->name('DownloadFile.customer');
+
 // --- END CUSTOMER ---
 
 

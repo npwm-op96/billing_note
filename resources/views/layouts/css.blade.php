@@ -7,6 +7,8 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300&display=swap" rel="stylesheet">
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;1,200&display=swap" rel="stylesheet"> -->
 <!-- Fonts Style : Kanit -->
   <style>
   body {
