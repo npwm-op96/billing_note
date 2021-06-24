@@ -24,7 +24,7 @@ Auth::routes();
 
   Route::get('/price', 'HomeController@price_rate')->name('our.price');
   Route::get('/machine-copy', 'HomeController@machine_copy')->name('our.machine_copy');
-  Route::get('/machine/create-new', 'HomeController@machine_copy_create')->name('our.machine_copy_create');
+  Route::get('/machine/machine-new', 'HomeController@machine_copy_create')->name('our.machine_copy_create');
 // --- END OUR ---
 
 

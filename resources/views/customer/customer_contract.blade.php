@@ -141,9 +141,9 @@
                                 <hr>
                                   <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
                                 <hr>
-                                  <p> <font color = "blue"><b>ประเภทของสัญญา</font></b> : {{ $contract_type [$value->contract_type] }} </p>
-                                <hr>
                                   <p> <b><font color = "red">เลขที่สัญญา</font></b> : {{ $value->contract_number }} </p>
+                                <hr>
+                                  <p> <font color = "blue"><b>ประเภทของสัญญา</font></b> : {{ $contract_type [$value->contract_type] }} </p>
                                 <hr>
                                   <p> <b>ผู้บันทึกข้อมูล</b> : {{ CmsHelper::Get_UserID($value->create_by)['create_by'] }} <font color = "red">( {{ CmsHelper::DateThai($value->created_at) }} | เวลา {{ CmsHelper::TimeThai($value->created_at) }} น. ) </font></p>
 

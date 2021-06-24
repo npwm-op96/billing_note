@@ -80,7 +80,7 @@
                       <th class="text-nowrap" style="text-align: center"> ประเภท </th>
                       <!-- <th class="text-nowrap" style="text-align: center"> ข้อมูลการติดต่อ </th> -->
                       <th class="text-nowrap" style="text-align: center"> วันที่วางบิล </th>
-                      <th class="text-nowrap" style="text-align: center"> วันที่รับเช็ค </th>
+                      <th class="text-nowrap" style="text-align: center"> วันที่รับเงิน </th>
                       <th class="text-nowrap" style="text-align: center"> สถานะลูกค้า </th>
                       <th class="text-nowrap" style="text-align: center"> Action </th>
                     </tr>
@@ -145,22 +145,48 @@
                                     <div class="modal-body">
 
                                         <p> <b>ชื่อลูกค้า / บริษัท</b> : {{$value->customer_name}} </p>
-                                      <hr>
                                         <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
-                                      <hr>
                                         <p> <b>ประเภท</b> : {{ CmsHelper::Get_Customer_type($value->customer_type)['customer_type'] }} </p>
-                                      <hr>
                                         <p> <b>เครดิตลูกค้า</b> : {{ $value->credit_term }} วัน</p>
+                                        <p> <b>ที่ตั้ง</b> : {{ $value->province_id }} </p>
                                       <hr>
-                                        <p> <b><font color = "red">วันที่วางบิล</font></b> : {{ CmsHelper::DateThai($value->billing_date) }} <b>ถึง</b> {{ CmsHelper::DateThai($value->billing_date_2) }} </p>
+                                        <p> <b><font color = "blue">วันที่วางบิล</font></b> </p>
+                                        <p> <b>สถานที่วางบิล</b> : {{ $value->location_billing." ".$value->location_branch_billing }} <br>
+                                        <p> <b>รายสัปดาห์</b> : {{ $value->weekly_billing }} <br>
+                                        <p> <b>รายเดือน</b> : {{ $value->monthly_billing }} <br>
+                                        <p> <b>วันที่แน่นอน</b> : {{ $value->fixdate_billing_1." , ".$value->fixdate_billing_2 }} <br>
+                                        <p> <b>ช่วงวันที่</b> : {{ CmsHelper::DateThai($value->billing_date) }} <b>ถึง</b> {{ CmsHelper::DateThai($value->billing_date_2) }} </p>
                                       <hr>
-                                        <p> <b><font color = "blue">วันที่รับเช็ค</font></b> : {{ CmsHelper::DateThai($value->check_date) }} </p>
+                                        <p> <b><font color = "red">วันที่รับเงิน</font></b> </p>
+                                        <p> <b>สถานที่วางบิล</b> : {{ $value->location_check." ".$value->location_branch_check }} <br>
+                                        <p> <b>รายสัปดาห์</b> : {{ $value->weekly_check }} <br>
+                                        <p> <b>รายเดือน</b> : {{ $value->monthly_check }} <br>
+                                        <p> <b>วันที่แน่นอน</b> : {{ $value->fixdate_check_1." , ".$value->fixdate_check_2 }} <br>
+                                        <p> <b>ช่วงวันที่</b> : {{ CmsHelper::DateThai($value->check_date) }} <b>ถึง</b> {{ CmsHelper::DateThai($value->check_date_2) }} </p>
+                                        </p>
                                       <hr>
-                                        <p> <b>ชื่อผู้ติดต่อ/ผู้ประสาน</b> : {{ $value->contact }} </p>
+                                        <p> <b>ชื่อผู้ติดต่อ</b> : {{ $value->contact }} <br>
+                                            <b>เบอร์โทร</b> : {{ $value->telephone }} <br>
+                                            <b>E-Mail</b> : {{ $value->customer_email }} <br>
+                                            <b>ไลน์ไอดี</b> : {{ $value->line }}
+                                        </p>
+                                      <!-- <hr> -->
+                                        <p> <b>ชื่อผู้ติดต่อ (ท่านที่ 2)</b> : {{ $value->contact_2 }} <br>
+                                            <b>เบอร์โทร</b> : {{ $value->telephone_2 }} <br>
+                                            <b>E-Mail</b> : {{ $value->customer_email_2 }} <br>
+                                            <b>ไลน์ไอดี</b> : {{ $value->line_2 }}
+                                        </p>
+                                        <!-- <hr> -->
+                                        <p> <b>ชื่อผู้ติดต่อ (ท่านที่ 3)</b> : {{ $value->contact_3 }} <br>
+                                            <b>เบอร์โทร</b> : {{ $value->telephone_3 }} <br>
+                                            <b>E-Mail</b> : {{ $value->customer_email_3 }} <br>
+                                            <b>ไลน์ไอดี</b> : {{ $value->line_3 }}
+                                        </p>
+
                                       <hr>
-                                        <p> <b>ข้อมูลการติดต่อ</b> : {{ $value->telephone }} </p>
+                                        <p> <b>โน้ตอื่นๆ</b> : {{ $value->remark }} <br>
                                       <hr>
-                                        <p> <b>ผู้บันทึกข้อมูล</b> : {{ CmsHelper::Get_UserID($value->create_by)['create_by'] }} <font color = "red">( {{ CmsHelper::DateThai($value->created_at) }} | เวลา {{ CmsHelper::TimeThai($value->created_at) }} น. ) </font></p>
+                                        <p> <b>*ผู้บันทึกข้อมูล</b> : {{ CmsHelper::Get_UserID($value->create_by)['create_by'] }} <font color = "red">( {{ CmsHelper::DateThai($value->created_at) }} | เวลา {{ CmsHelper::TimeThai($value->created_at) }} น. ) </font></p>
 
                                       <!-- <button type="button" class="btn btn-primary float-right"> บันทึกข้อมูล </button> -->
                                     </div>

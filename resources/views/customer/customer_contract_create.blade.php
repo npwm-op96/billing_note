@@ -76,13 +76,13 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label> เลขที่สัญญา </label>
+                        <label> เลขที่สัญญา </label><font color="red"> * </font>
                         <input type="text" class="form-control" name="contract_number" placeholder="กรุณาระบุเลขที่สัญญา" required>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label> ประเภทสัญญา </label>
+                        <label> ประเภทสัญญา </label><font color="red"> * </font>
                           <select class="form-control" name="contract_type" required>
                               <option disabled="true" selected="true"> - กรุณาเลือก - </option>
                               @foreach($contract_types as $key => $value)
@@ -103,6 +103,24 @@
                       </div>
                     </div>
                   </div>
+
+
+            <!-- ต้องทำเป็น select2 เพื่อให้สามารถเลือกได้หลายเครื่อง และเก็บไว้ใน DB contract_x_machine -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label> หมายเลขเครื่อง </label>
+                          <select class="form-control" name="machine_dno_id" required>
+                              <option disabled="true" selected="true"> - กรุณาเลือก - </option>
+                            {{--  @foreach($machine_dno as $value)
+                                <option value="{{ $value->id }}"> {{ $value->name_th." ".$value->dno_number }} </option>
+                              @endforeach --}}
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+            <!-- ต้องทำเป็น select2 เพื่อให้สามารถเลือกได้หลายเครื่อง และเก็บไว้ใน DB contract_x_machine -->
+
 
                   <div class="row">
                     <div class="col-md-4">
@@ -128,14 +146,28 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label> วันที่จดมิเตอร์ (ตั้งแต่) </label>
-                        <input type="text" class="form-control" name="cycle_meter_date_1" id="datepicker4" placeholder="ปี/เดือน/วัน" autocomplete="off" required>
+                        <label> วันที่จดมิเตอร์ (วัน) </label><font color="red"> * </font>
+                        <select class="form-control" name="cycle_meter_date_1" required>
+                            <option disabled="true" selected="true"> - กรุณาเลือก - </option>
+                            @foreach($monthly as $value)
+                              <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
+                            @endforeach
+                        </select>
+                        <!-- <input type="text" class="form-control" name="cycle_meter_date_1" id="startDate" placeholder="ตั้งแต่" autocomplete="off" > -->
+                        <!-- <input type="text" class="form-control" name="cycle_meter_date_1" id="datepicker4" placeholder="ปี/เดือน/วัน" autocomplete="off" required> -->
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label> รอบวันที่จดมิเตอร์ (จนถึง) </label>
-                        <input type="text" class="form-control" name="cycle_meter_date_2" id="datepicker5" placeholder="ปี/เดือน/วัน" autocomplete="off">
+                        <label> ข้อมูลเพิ่มเติม </label>
+                        <select class="form-control" name="cycle_meter_date_2" >
+                            <option disabled="true" selected="true"> - กรุณาเลือก - </option>
+                              <option value="ต้นเดือน"> ต้นเดือน </option>
+                              <option value="กลางเดือน"> กลางเดือน </option>
+                              <option value="ปลายเดือน"> ปลายเดือน </option>
+                        </select>
+                        <!-- <input type="text" class="form-control" name="cycle_meter_date_2" id="endDate" placeholder="จนถึง" autocomplete="off"> -->
+                        <!-- <input type="text" class="form-control" name="cycle_meter_date_2" id="datepicker5" placeholder="ปี/เดือน/วัน" autocomplete="off"> -->
                       </div>
                     </div>
                   </div>
@@ -169,6 +201,26 @@
 
 <script>
   var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+  // --- Date-Range-Picker ---
+      $('#startDate').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy/mm/dd',
+        iconsLibrary: 'fontawesome',
+        // minDate: today,
+        maxDate: function () {
+            return $('#endDate').val();
+        }
+      });
+      $('#endDate').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy/mm/dd',
+        iconsLibrary: 'fontawesome',
+        minDate: function () {
+            return $('#startDate').val();
+        }
+      });
+
+
     $('#datepicker1').datepicker({
         uiLibrary: 'bootstrap4',
         format: 'yyyy/mm/dd',
@@ -190,21 +242,21 @@
         // maxDate: today,
         autoclose: true,
         todayHighlight: true
-    })
-    $('#datepicker4').datepicker({
-        uiLibrary: 'bootstrap4',
-        format: 'yyyy/mm/dd',
-        // maxDate: today,
-        autoclose: true,
-        todayHighlight: true
-    })
-    $('#datepicker5').datepicker({
-        uiLibrary: 'bootstrap4',
-        format: 'yyyy/mm/dd',
-        // maxDate: today,
-        autoclose: true,
-        todayHighlight: true
     });
+    // $('#datepicker4').datepicker({
+    //     uiLibrary: 'bootstrap4',
+    //     format: 'yyyy/mm/dd',
+    //     // maxDate: today,
+    //     autoclose: true,
+    //     todayHighlight: true
+    // })
+    // $('#datepicker5').datepicker({
+    //     uiLibrary: 'bootstrap4',
+    //     format: 'yyyy/mm/dd',
+    //     // maxDate: today,
+    //     autoclose: true,
+    //     todayHighlight: true
+    // })
 
 </script>
 <!-- END DatePicker Style -->

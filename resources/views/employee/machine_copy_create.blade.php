@@ -23,11 +23,9 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row mb-2">
-        <!-- <div class="col-sm-6">
-          <h1>General Form</h1>
-        </div> -->
+
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
@@ -44,58 +42,107 @@
   <section class="content">
     <div class="container">
 
-      <div class="row">
-              <!-- left column -->
-              <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title"> เพิ่มข้อมูลเครื่องพิมพ์ / อุปกรณ์ </h3>
-                  </div>
-                  <!-- /.card-header -->
-                  <!-- form start -->
-                  <form>
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputFile">File input</label>
-                        <div class="input-group">
-                          <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                          </div>
-                          <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                      </div>
-                    </div>
-                    <!-- /.card-body -->
+      <form action="{{ route('customer_contract.insert') }}" method="POST">
+        @csrf
 
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                  </form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card shadow">
+                <div class="card-header" style="background-color: #F0F8FF;">
+                  <h3 class="card-title"><b><i class="fas fa-file-signature"></i> เพิ่มข้อมูลเครื่องพิมพ์ / อุปกรณ์ </b></h3>
                 </div>
-                  </div>
+
+                <div class="card-body">
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Serial No. </label><font color="red"> * </font>
+                        <input type="text" class="form-control" name="serial_no" required>
+                      </div>
                     </div>
-                <!-- /.card -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> หมายเลข DNO </label><font color="red"> * </font>
+                        <input type="text" class="form-control" name="dno_number" required>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> สถานะ DNO </label><font color="red"> * </font>
+                          <select class="form-control" name="dno_status" required>
+                              <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
+                            @foreach($dno_status as $key => $value)
+                              <option value="{{$key}}"> {{$value}} </option>
+                            @endforeach
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> ยี่ห้อ </label><font color="red"> * </font>
+                          <select class="form-control" name="brands" required>
+                              <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
+                            @foreach($brands as $key => $value)
+                              <option value="{{$key}}"> {{$value}} </option>
+                            @endforeach
+                          </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Model </label><font color="red"> * </font>
+                        <input type="text" class="form-control" name="model" required>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> B&W/Colour </label><font color="red"> * </font>
+                          <select class="form-control" name="type_color_x_bk" required>
+                            <option value="B&W"> B&W </option>
+                            <option value="Colour"> Colour </option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> ยี่ห้อ </label><font color="red"> * </font>
+                          <select class="form-control" name="brands" required>
+                              <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
+                            @foreach($brands as $key => $value)
+                              <option value="{{$key}}"> {{$value}} </option>
+                            @endforeach
+                          </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> ความเร็วเครื่อง </label><font color="red"> * </font>
+                        <input type="text" class="form-control" name="segment">
+                      </div>
+                    </div>
+                  </div>
 
 
 
 
 
+                </div> <!-- END card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary float-right"> บันทึกข้อมูล </button>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!-- /.card -->
+        </form>
 
 
 
@@ -123,12 +170,6 @@
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
-@stop
-
-
-@section('custom-js')
-
 <script>
   $(function() {
     $("#example1").DataTable({
@@ -148,6 +189,42 @@
       "responsive": true,
     });
   });
+</script>
+@stop
+
+
+@section('custom-js')
+<!-- DatePicker Style -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+
+<script>
+  var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+  // --- Date-Range-Picker ---
+
+    $('#datepicker1').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy/mm/dd',
+        // maxDate: today,
+        autoclose: true,
+        todayHighlight: true,
+        // thaiyear: true
+    })
+    $('#datepicker2').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy/mm/dd',
+        // maxDate: today,
+        autoclose: true,
+        todayHighlight: true
+    })
+    $('#datepicker3').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy/mm/dd',
+        // maxDate: today,
+        autoclose: true,
+        todayHighlight: true
+    });
+
 </script>
 
 @stop

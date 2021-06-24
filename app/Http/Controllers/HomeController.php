@@ -15,10 +15,11 @@ use Auth;
 use App\Users;
 use App\Position;
 use App\Customer;
+use App\Province;
 use App\Customer_contract;
 use App\Customer_type;
 use App\Machine_copy;
-// use Carbon\Carbon;
+use Carbon\Carbon;
 
 
 class HomeController extends Controller
@@ -46,6 +47,10 @@ class HomeController extends Controller
     {
       $table_customer = Customer::all();
 
+      $province = Province::all();
+      // dd($province);
+
+
       // $edit = Customer::where('id', $request->id)->first();
 
 
@@ -53,6 +58,7 @@ class HomeController extends Controller
 
       return view('customer.customer',[
         'table_customer'  =>  $table_customer,
+        'province'        =>  $province,
       ]);
     }
 
@@ -112,13 +118,21 @@ class HomeController extends Controller
         "contact_2"        =>  $request->contact_2,
         "contact_3"        =>  $request->contact_3,
 // ---------------------------------------------------------
+        "location_billing"        =>  $request->location_billing,
+        "location_branch_billing" =>  $request->location_branch_billing,
         "weekly_billing"   =>  $request->weekly_billing,
         "monthly_billing"  =>  $request->monthly_billing,
+        "fixdate_billing_1"  =>  $request->fixdate_billing_1,
+        "fixdate_billing_2"  =>  $request->fixdate_billing_2,
         "billing_date"     =>  $request->billing_date,
         "billing_date_2"   =>  $request->billing_date_2,
 // ---------------------------------------------------------
+        "location_check"          =>  $request->location_check,
+        "location_branch_check"   =>  $request->location_branch_check,
         "weekly_check"     =>  $request->weekly_check,
         "monthly_check"    =>  $request->monthly_check,
+        "fixdate_check_1"  =>  $request->fixdate_check_1,
+        "fixdate_check_2"  =>  $request->fixdate_check_2,
         "check_date"       =>  $request->check_date,
         "check_date_2"     =>  $request->check_date_2,
 // ---------------------------------------------------------
@@ -212,11 +226,15 @@ class HomeController extends Controller
                          4 => 'Payment By Installments',
                        ];
 
+      $monthly = DB::table('ref_monthly')->get();
+
+
 
       return view('customer.customer_contract_create',[
         'data'            =>  $data,
-        'saleman'            =>  $saleman,
-        'contract_types'  => $contract_types
+        'saleman'         =>  $saleman,
+        'contract_types'  =>  $contract_types,
+        'monthly'         =>  $monthly,
       ]);
     }
 
@@ -297,9 +315,28 @@ class HomeController extends Controller
     }
     public function machine_copy_create()
     {
+      $dno_status = [ 1 => 'RPE',
+                      2 => 'RRP'
+                    ];
+
+      $brands = [ 1 => 'Canon',
+                  2 => 'HP',
+                  3 => 'EPSON',
+                  4 => 'Kyocera',
+                  5 => 'BROTHER',
+                ];
+
+      $type_of_machine = [ 1 => 'new',
+                           2 => 'demo',
+                           3 => 'referbish',
+                         ];
+
+
 
       return view('employee.machine_copy_create',[
-        // 'data'  =>  $data
+        'dno_status'  =>  $dno_status,
+        'brands'      =>  $brands,
+        'type_of_machine'  =>  $type_of_machine,
       ]);
     }
 // --- END MACHINE ---

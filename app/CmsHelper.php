@@ -9,6 +9,8 @@ use App\Users;
 use App\User;
 use App\Position;
 use App\Departments;
+use App\Province;
+
 
 
 class CmsHelper
@@ -253,11 +255,11 @@ class CmsHelper
     return $arr;
   }
 
-  public static function Get_Roles_EN()
+  public static function Province()
   {
-    $lists_roles = Roles::all();
+    $lists_roles = Province::all();
     foreach ($lists_roles as $roles_en) {
-      $arr[$roles_en->id] = $roles_en->name_eng;
+      $arr[$roles_en->province_id] = $roles_en->province_name;
     }
     return $arr;
   }
@@ -309,6 +311,44 @@ class CmsHelper
       "position" => $position,
     );
   }
+
+
+  //Ref_Province
+  // public static function Get_Province($province_id)
+  // {
+  //   $query = Province::find($province_id);
+  //   $province_id = 0;
+  //   $province_name = '';
+  //   if ($query) {
+  //     $province_id     = $query->$province_id;
+  //     $province_name   = $query->$province_name;
+  //   }
+  //   //--------------------------
+  //   return array(
+  //     "province_id"   => $province_id,
+  //     "province_name" => $province_name,
+  //   );
+  // }
+
+  //Ref_District
+  // public static function Province($district_id)
+  // {
+  //   $query = Position::find($district_id);
+  //   $id = 0;
+  //   $district_id = '';
+  //   if (!empty($query)) {
+  //     $district_id = $query->id;
+  //     $district_name = $query->district_id;
+  //   }
+  //   //--------------------------
+  //   return array(
+  //     "id"          => $id,
+  //     "district_id" => $district_id,
+  //   );
+  // }
+
+
+
 
   public static function Get_Customer_type($customer_id)
   {

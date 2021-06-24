@@ -74,9 +74,11 @@
                       <th class="text-center"> หมายเลข DNO </th>
                       <th class="text-center"> ยี่ห้อ </th>
                       <th class="text-center"> รุ่น </th>
-                      <th class="text-center"> สถานะ DNO </th>
+                      <!-- <th class="text-center"> สถานะ DNO </th> -->
                       <th class="text-center"> ประเภทอุปกรณ์ </th>
                       <th class="text-center"> B&W / Colour </th>
+                      <th class="text-center"> สถานะเครื่อง </th>
+                      <th class="text-center"> Actions </th>
                     </tr>
                   </thead>
 
@@ -91,7 +93,7 @@
                         <td class="text-center text-primary"> {{ $value->dno_number }} </td>
                         <td class="text-center"> {{ $value->brands }} </td>
                         <td class="text-center"> {{ $value->model }} </td>
-                        <td class="text-center"> {{ $value->dno_status }} </td>
+                        <!-- <td class="text-center"> {{-- $value->dno_status --}} </td> -->
                         <td class="text-center"> {{ $value->type_of_machine }} </td>
                         <td class="text-center">
                           @if($value->type_color_x_bk =="Colour")
@@ -100,6 +102,58 @@
                             <span class="badge bg-secondary badge-pill"> Black & White </span>
                           @endif
                         </td>
+                        <td class="text-center">
+                          @if($value->status == NULL)
+                            <span class="badge bg-success badge-pill"> ว่าง </span>
+                          @elseif($value->status == "2")
+                            <span class="badge bg-secondary badge-pill"> ไม่ว่าง </span>
+                          @endif
+                        </td>
+                        <td class="text-center">
+                          <!-- status -->
+                            <button type="button" class="btn btn-primary btn-md" title="status" data-toggle="modal" data-target="#StatusModal{{ $value->id }}">
+                              <i class="fas fa-pen-alt"></i>
+                            </button>
+                          <!-- END status -->
+                        </td>
+
+
+                            <!-- MODAL StatusModal -->
+                            <div class="modal fade" id="StatusModal{{ $value->id }}">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title"><b> สถานะเครื่องพิมพ์/อุปกรณ์ ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col-md-9">
+                                        <!-- hidden = id -->
+                                        <input type="hidden" class="form-control" name="id" value="{{ $value->id }}">
+
+                                        <select class="form-control" name="verified" >
+                                            <!-- <option value="{{-- $key --}}" {{-- $verified_list == $key ? 'selected' : '' --}}> {{-- $value --}} </option> -->
+                                            <option value=""> ว่าง </option>
+                                            <option value="2"> ไม่ว่าง </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <br>
+                                  </div>
+
+                                      <div class="card-footer">
+                                        <button type="button" class="btn btn-primary float-right"> บันทึกข้อมูล </button>
+                                      </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            <!-- END MODAL StatusModal -->
+
+
                       </tr>
                       @php
                         $i++;
