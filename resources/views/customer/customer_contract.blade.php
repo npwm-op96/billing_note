@@ -70,15 +70,15 @@
                 <table id="example1" class="table table-bordered table-striped table-reponsive table-sm">
                   <thead class="text-nowrap" style="background-color: #FFF9F9;">
                     <tr>
-                      <th class="text-nowrap" style="text-align: center"> ลำดับ </th>
-                      <th class="text-nowrap" style="text-align: center"> รหัสลูกค้า </th>
-                      <th class="text-nowrap" style="text-align: center"> ชื่อลูกค้า / บริษัท </th>
-                      <th class="text-nowrap" style="text-align: center"> เลขที่สัญญา </th>
-                      <th class="text-nowrap" style="text-align: center"> ประเภทสัญญา </th>
-                      <th class="text-nowrap" style="text-align: center"> วันที่ส่งเครื่อง </th>
-                      <th class="text-nowrap" style="text-align: center"> วันที่เริ่มต้นสัญญา </th>
-                      <th class="text-nowrap" style="text-align: center"> วันที่สิ้นสุดสัญญา </th>
-                      <th class="text-nowrap" style="text-align: center"> Action </th>
+                      <th class="text-center"> ลำดับ </th>
+                      <th class="text-center"> รหัสลูกค้า </th>
+                      <th class="text-center"> ชื่อลูกค้า / บริษัท </th>
+                      <th class="text-center"> เลขที่สัญญา </th>
+                      <th class="text-center"> ประเภทสัญญา </th>
+                      <th class="text-center"> วันที่ส่งเครื่อง </th>
+                      <th class="text-center"> วันที่เริ่มต้นสัญญา </th>
+                      <th class="text-center"> วันที่สิ้นสุดสัญญา </th>
+                      <th class="text-center"> Action </th>
                     </tr>
                   </thead>
 
@@ -116,7 +116,8 @@
                           <!-- END View -->
 
                           <!-- Edit -->
-                            <a href="{{ route('customer_contract.edit', [ 'id' => $value->id ]) }}">
+                            <!-- <a href="{{-- route('customer_contract.edit', [ 'id' => $value->id ]) --}}"> -->
+                            <a href="#">
                               <button type="button" class="btn btn-warning btn-md" title="Edit">
                                 <i class="fas fa-edit"></i>
                               </button>

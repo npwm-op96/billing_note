@@ -124,7 +124,7 @@
 
                          <!-- ADD Contract -->
                          <a href="{{ route('customer_contract.create', [ 'id' => $value->id ]) }}">
-                           <button type="button" class="btn btn-md" style="background-color: #ff851b;" title="Add">
+                           <button type="button" class="btn btn-md" style="background-color: #ff851b;" title="Add-Contract">
                              <i class="fas fa-plus-circle"></i>
                            </button>
                           </a>

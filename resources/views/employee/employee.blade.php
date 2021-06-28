@@ -92,7 +92,7 @@
                         <td class="text-nowrap" style="text-align: center">
                         <!-- Details -->
                           <button type="button" class="btn btn-warning btn-md" title="Details" data-toggle="modal" data-target="#AddModal">
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-bars"></i>
                           </button>
                         <!-- END Details -->
                         </td>
@@ -101,7 +101,7 @@
 
                               <!-- MODAL -->
                               <div class="modal fade" id="AddModal">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-dialog modal-dialog-centered">
                                   <div class="modal-content">
                                     <div class="modal-header">
                                       <h4 class="modal-title">Large Modal</h4>
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="modal-footer justify-content-between">
                                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      <button type="button" class="btn btn-primary">Save changes</button>
+                                      <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                                     </div>
                                   </div>
                                   <!-- /.modal-content -->

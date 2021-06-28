@@ -42,7 +42,7 @@
   <section class="content">
     <div class="container">
 
-      <form action="{{ route('customer_contract.insert') }}" method="POST">
+      <form action="{{ route('machine.insert') }}" method="POST">
         @csrf
 
           <div class="row">
@@ -53,14 +53,33 @@
                 </div>
 
                 <div class="card-body">
-
                   <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> ยี่ห้อ </label><font color="red"> * </font>
+                          <select class="form-control" name="brands" required>
+                              <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
+                            @foreach($brands as $value)
+                              <option value="{{ $value->id }}"> {{ $value->brands }} </option>
+                            @endforeach
+                          </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> รุ่น </label><font color="red"> * </font>
+                        <input type="text" class="form-control" name="model" required>
+                      </div>
+                    </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label> Serial No. </label><font color="red"> * </font>
                         <input type="text" class="form-control" name="serial_no" required>
                       </div>
                     </div>
+                  </div>
+
+                  <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
                         <label> หมายเลข DNO </label><font color="red"> * </font>
@@ -78,29 +97,34 @@
                           </select>
                       </div>
                     </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Segment </label><font color="red"> * </font>
+                        <select class="form-control" name="segment" required>
+                            <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
+                          @foreach($segment as $value)
+                            <option value="{{ $value->id }}"> {{ $value->segment }} </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label> ยี่ห้อ </label><font color="red"> * </font>
-                          <select class="form-control" name="brands" required>
-                              <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
-                            @foreach($brands as $key => $value)
-                              <option value="{{$key}}"> {{$value}} </option>
-                            @endforeach
-                          </select>
+                        <label> ประเภทอุปกรณ์ </label><font color="red"> * </font>
+                        <select class="form-control" name="type_of_machine" required>
+                            <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
+                          @foreach($type_of_machine as $key => $value)
+                            <option value="{{ $key }}"> {{ $value }} </option>
+                          @endforeach
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label> Model </label><font color="red"> * </font>
-                        <input type="text" class="form-control" name="model" required>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label> B&W/Colour </label><font color="red"> * </font>
+                        <label> B&W / Colour </label><font color="red"> * </font>
                           <select class="form-control" name="type_color_x_bk" required>
                             <option value="B&W"> B&W </option>
                             <option value="Colour"> Colour </option>
@@ -110,28 +134,13 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                       <div class="form-group">
-                        <label> ยี่ห้อ </label><font color="red"> * </font>
-                          <select class="form-control" name="brands" required>
-                              <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
-                            @foreach($brands as $key => $value)
-                              <option value="{{$key}}"> {{$value}} </option>
-                            @endforeach
-                          </select>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label> ความเร็วเครื่อง </label><font color="red"> * </font>
-                        <input type="text" class="form-control" name="segment">
+                        <label> โน้ตอื่นๆ </label><font color="red"> * (ถ้ามี) </font>
+                        <textarea type="text" class="form-control" name="remark" rows="3"></textarea>
                       </div>
                     </div>
                   </div>
-
-
-
-
 
                 </div> <!-- END card-body -->
 
@@ -143,8 +152,6 @@
           </div>
       <!-- /.card -->
         </form>
-
-
 
 
     </div><!-- /.container-fluid -->

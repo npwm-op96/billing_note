@@ -47,14 +47,14 @@
               </a>
             </li>
           </ul>
-          <ul class="nav nav-treeview">
+          <!-- <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('our.price') }}" class="nav-link {{ active_route('our.price') }} ">
+              <a href="{{-- route('our.price') --}}" class="nav-link {{-- active_route('our.price') --}} ">
                 <i class="far fa-circle nav-icon text-info"></i>
                 <p> เรทราคา </p>
               </a>
             </li>
-          </ul>
+          </ul> -->
         </li>
 
 

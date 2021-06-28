@@ -18,18 +18,26 @@ Route::get('/', function () {
 
 // dd(Auth::check());
 Auth::routes();
-// --- OUR ---
-  Route::get('/home', 'HomeController@index')->name('our.home');
-  Route::get('/employee/create-new', 'HomeController@employee_create')->name('our.create');
-
-  Route::get('/price', 'HomeController@price_rate')->name('our.price');
-  Route::get('/machine-copy', 'HomeController@machine_copy')->name('our.machine_copy');
-  Route::get('/machine/machine-new', 'HomeController@machine_copy_create')->name('our.machine_copy_create');
-// --- END OUR ---
+// --- COMPANY ---
+  // --- EMPLOYEE ---
+  Route::get('/home', 'EmployeeController@index')->name('our.home');
+  Route::get('/employee/create-new', 'EmployeeController@employee_create')->name('our.create');
+  // --- END EMPLOYEE ---
 
 
 
-// --- CUSTOMER ---
+  // --- MACHINE-COPY ---
+  Route::get('/machine-copy', 'MachineController@machine_copy')->name('our.machine_copy');
+  Route::get('/machine/machine-new', 'MachineController@machine_copy_create')->name('our.machine_copy_create');
+  // --- INSERT ---
+  Route::post('/machine/machine-insert', 'MachineController@machine_insert')->name('machine.insert');
+  // --- EDIT ---
+  Route::get('/machine/edit/{id}', 'MachineController@machine_edit')->name('customer.edit');
+  // --- END MACHINE-COPY ---
+
+
+
+  // --- CUSTOMER ---
   Route::get('/customer', 'HomeController@customer')->name('customer.index');
   Route::get('/customer/create-new', 'HomeController@customer_create')->name('customer.create');
   // --- INSERT ---
@@ -41,15 +49,17 @@ Auth::routes();
   //  -- DOWNLOAD --
   Route::get('/Download-Files/customer/{id}/{files}','ResearchController@DownloadFile')->name('DownloadFile.customer');
 
-// --- END CUSTOMER ---
+  // --- END CUSTOMER ---
 
 
 
-// --- CUSTOMER-CONTRACT ---
+  // --- CUSTOMER-CONTRACT ---
   Route::get('/customer-contract', 'HomeController@customer_contract')->name('customer.contract');
   Route::get('/customer/contract-new/{id}', 'HomeController@customer_contract_create')->name('customer_contract.create');
+  // -- Select2 --
+  Route::get('/Getuser_central', array('as' => 'Select2.ajax.get.customer.contract', 'uses' => 'HomeController@List_Serial_Machine'));
   // --- INSERT ---
   Route::post('/customer/contract-insert', 'HomeController@customer_contract_insert')->name('customer_contract.insert');
   // --- EDIT ---
   Route::get('/customer/contract-edit/{id}', 'HomeController@customer_contract_edit')->name('customer_contract.edit');
-// --- END CUSTOMER-CONTRACT ---
+  // --- END CUSTOMER-CONTRACT ---

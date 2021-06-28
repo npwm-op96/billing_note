@@ -19,11 +19,10 @@ use App\Province;
 use App\Customer_contract;
 use App\Customer_type;
 use App\Machine_copy;
-use App\Contract_x_machine;
 use Carbon\Carbon;
 
 
-class HomeController extends Controller
+class EmployeeController extends Controller
 {
   /**
    * Create a new controller instance.
@@ -240,101 +239,33 @@ class HomeController extends Controller
     }
 
 
-
-    // -- Select2 --
-    public function List_Serial_Machine(Request $request){
-
-      $result = Machine_copy::query();
-
-      //search
-      if(isset($request->searchTerm)){
-        $result = $result->select('machine_copy.id','machine_copy.serial_no');
-        $result = $result->where('machine_copy.serial_no', 'like', '%' . $request->searchTerm . '%');
-        $result = $result->orderby('machine_copy.id','ASC');
-        $result = $result->get();
-      //dropdown
-      }else {
-        $result = $result->select('machine_copy.id','machine_copy.serial_no');
-        $result = $result->orderby('machine_copy.id','ASC');
-        $result = $result->get();
-      }
-
-      $datas = array();
-      foreach($result as $data){
-        $json_datas[] = array("id"=>$data->id, "text"=>$data->serial_no);
-      }
-      //FIX System-Error-Logs by [if]
-      if(count($result)>0){
-        return response()->json($json_datas);
-      }
-    }
-// -- END  --
-
-
-
     public function customer_contract_insert(Request $request)
     {
-      $i = 0; //Index of S/N
 
-          $data_contract = [
-            "customer_id"        =>  $request->id, //from CUSTOMER table
-            "salesman_id"        =>  $request->salesman_id, //from USERS table
-            "contract_number"    =>  $request->contract_number,
-            "number_of_machine"  =>  $request->number_of_machine,
-            "contract_type"      =>  $request->contract_type,
-            "install_site"       =>  $request->install_site,
-        //----------------------------------------------------------
-            "carry_contract"     =>  $request->carry_contract,
-            "start_contract"     =>  $request->start_contract,
-            "end_contract"       =>  $request->end_contract,
-            "cycle_meter_date_1" =>  $request->cycle_meter_date_1,
-            "cycle_meter_date_2" =>  $request->cycle_meter_date_2,
-        //----------------------------------------------------------
-            "rental_cost"        =>  $request->rental_cost,
-            "utility_1"          =>  $request->utility_1,
-            "utility_2"          =>  $request->utility_2,
-            "rate_bk_service"    =>  $request->rate_bk_service,
-            "rate_color_service" =>  $request->rate_color_service,
-            "benefit_cost"       =>  $request->benefit_cost,
-            "insurance_cost"     =>  $request->insurance_cost,
-            "create_by"          =>  Auth::user()->id,
-            "created_at"         =>  Carbon::now(),
-          ];
+      $data_contract = [
+        "customer_id"        =>  $request->id, //from CUSTOMER table
+        "salesman_id"        =>  $request->salesman_id, //from USERS table
+        "contract_number"    =>  $request->contract_number,
+        "carry_contract"     =>  $request->carry_contract,
+        "start_contract"     =>  $request->start_contract,
+        "end_contract"       =>  $request->end_contract,
+        "contract_type"      =>  $request->contract_type,
+        "cycle_meter_date_1" =>  $request->cycle_meter_date_1,
+        "cycle_meter_date_2" =>  $request->cycle_meter_date_2,
+        "create_by"          =>  Auth::user()->id,
+        "created_at"         =>  Carbon::now(),
+      ];
+      // dd($data_contract);
 
-          $insert = Customer_contract::insertGetId($data_contract);
+      $insert = Customer_contract::insertGetId($data_contract);
 
-
-        foreach($request->machine_dno_id as $value){
-
-          $contract_x_machine[] = [
-            "contract_id"   =>  $insert,
-            "customer_id"   =>  $request->id,
-            "machine_id"    =>  $request->machine_dno_id[$i],
-          ];
-
-
-        //If $insert Succuss is UPDATE machine_copy
-        DB::table('machine_copy')
-          ->where('id', $request->machine_dno_id[$i])
-          ->update(['status' => "1"]);
-
-      $i = $i+1;
-
+        if($insert){
+          session()->put('contract', 'okkkkkayyyyy');
+          return redirect()->route('customer.contract', $request->id)->with('Okayyyyy');
+        }else{
+          return redirect()->back()->with('Errorrr');
+        }
     }
-
-      if($insert){
-
-          Contract_x_machine::insert($contract_x_machine);
-
-        session()->put('contract', 'okkkkkayyyyy');
-        return redirect()->route('customer.contract', $request->id)->with('Okayyyyy');
-      }else{
-        return redirect()->back()->with('Errorrr');
-      }
-    }
-
-
-
 
 
     public function customer_contract_edit(Request $request)
@@ -348,7 +279,82 @@ class HomeController extends Controller
 
 
 
-// -------------------- Function GET Province -----------------------
+
+
+// -------------------- OUR.* --------------------
+
+// --- EMPLOYEE ---
+    public function index()
+    {
+
+      $data = Users::all();
+
+      return view('employee.employee',[
+        'data'  =>  $data
+      ]);
+    }
+    public function employee_create()
+    {
+
+      return view('employee.employee_create',[
+        // 'data'  =>  $data
+      ]);
+    }
+// --- END EMPLOYEE ---
+
+
+
+// --- MACHINE ---
+    public function machine_copy()
+    {
+      $data_machine = Machine_copy::all();
+
+      return view('employee.machine_copy',[
+        'data_machine'  =>  $data_machine
+      ]);
+    }
+    public function machine_copy_create()
+    {
+      $dno_status = [ 1 => 'RPE',
+                      2 => 'RRP'
+                    ];
+
+      $brands = [ 1 => 'Canon',
+                  2 => 'HP',
+                  3 => 'EPSON',
+                  4 => 'Kyocera',
+                  5 => 'BROTHER',
+                ];
+
+      $type_of_machine = [ 1 => 'new',
+                           2 => 'demo',
+                           3 => 'referbish',
+                         ];
+
+
+
+      return view('employee.machine_copy_create',[
+        'dno_status'  =>  $dno_status,
+        'brands'      =>  $brands,
+        'type_of_machine'  =>  $type_of_machine,
+      ]);
+    }
+// --- END MACHINE ---
+
+
+
+// --- PRICE_RATE ---
+    public function price_rate()
+    {
+
+      return view('employee.price_rate',[
+        // 'data'  =>  $data
+      ]);
+    }
+    // --- END PRICE_RATE ---
+
+
+
     public function arr_ref_province()
     {  //ทำข้อมูล query ให้เป็น enum
       $query=DB::table('ref_province')

@@ -70,11 +70,10 @@
                   <thead class="text-nowrap" style="background-color: #F0F8FF;">
                     <tr>
                       <th class="text-center"> ลำดับ </th>
-                      <th class="text-center"> Serial No. </th>
-                      <th class="text-center"> หมายเลข DNO </th>
                       <th class="text-center"> ยี่ห้อ </th>
                       <th class="text-center"> รุ่น </th>
-                      <!-- <th class="text-center"> สถานะ DNO </th> -->
+                      <th class="text-center"> Serial No. </th>
+                      <th class="text-center"> หมายเลข DNO </th>
                       <th class="text-center"> ประเภทอุปกรณ์ </th>
                       <th class="text-center"> B&W / Colour </th>
                       <th class="text-center"> สถานะเครื่อง </th>
@@ -89,12 +88,11 @@
                     @foreach($data_machine as $value)
                       <tr>
                         <td class="text-center"> {{ $i }} </td>
+                        <td> {{ $value->brands }} </td>
+                        <td> {{ $value->model }} </td>
                         <td class="text-center text-danger"> {{ $value->serial_no }} </td>
                         <td class="text-center text-primary"> {{ $value->dno_number }} </td>
-                        <td class="text-center"> {{ $value->brands }} </td>
-                        <td class="text-center"> {{ $value->model }} </td>
-                        <!-- <td class="text-center"> {{-- $value->dno_status --}} </td> -->
-                        <td class="text-center"> {{ $value->type_of_machine }} </td>
+                        <td class="text-center"> {{ $type_of_machine [$value->type_of_machine] }} </td>
                         <td class="text-center">
                           @if($value->type_color_x_bk =="Colour")
                             <span class="badge bg-danger badge-pill"> Colour </span>
@@ -105,13 +103,13 @@
                         <td class="text-center">
                           @if($value->status == NULL)
                             <span class="badge bg-success badge-pill"> ว่าง </span>
-                          @elseif($value->status == "2")
+                          @elseif($value->status == "1")
                             <span class="badge bg-secondary badge-pill"> ไม่ว่าง </span>
                           @endif
                         </td>
                         <td class="text-center">
                           <!-- status -->
-                            <button type="button" class="btn btn-primary btn-md" title="status" data-toggle="modal" data-target="#StatusModal{{ $value->id }}">
+                            <button type="button" class="btn btn-warning btn-md" title="status" data-toggle="modal" data-target="#StatusModal{{ $value->id }}">
                               <i class="fas fa-pen-alt"></i>
                             </button>
                           <!-- END status -->
@@ -130,7 +128,7 @@
                                   </div>
                                   <div class="modal-body">
                                     <div class="row">
-                                      <div class="col-md-9">
+                                      <div class="col-md-12">
                                         <!-- hidden = id -->
                                         <input type="hidden" class="form-control" name="id" value="{{ $value->id }}">
 
@@ -195,12 +193,6 @@
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
-@stop
-
-
-@section('custom-js')
-
 <script>
   $(function() {
     $("#example5").DataTable({
@@ -221,5 +213,28 @@
     });
   });
 </script>
+
+@stop
+
+
+@section('custom-js')
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- INSERT success -->
+    @if(Session::get('machines'))
+     <?php Session::forget('machines'); ?>
+      <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'บันทึกข้อมูลเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            // confirmButtonColor: '#3085d6',
+            timer: 2200
+        })
+      </script>
+    @endif
+    <!-- END INSERT success -->
 
 @stop
