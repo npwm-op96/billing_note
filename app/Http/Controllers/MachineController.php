@@ -45,7 +45,50 @@ class MachineController extends Controller
 
     public function machine_copy()
     {
-      $data_machine = Machine_copy::all();
+
+      $data_tbl1_machine = Machine_copy::whereNull('status')
+                                       ->whereNull('deleted_at')
+                                       ->get();
+
+      $data_tbl2_machine = DB::table('customer_x_machine')
+                          ->join('machine_copy', 'customer_x_machine.machine_id', '=', 'machine_copy.id')
+                          ->join('customer', 'customer_x_machine.customer_id', '=', 'customer.id')
+                          ->join('contract_rental', 'customer_x_machine.contract_id', '=', 'contract_rental.id')
+                          ->select('machine_copy.id',
+                                  // 'machine_copy.customer_code',
+                                  'machine_copy.brands',
+                                  'machine_copy.model',
+                                  'machine_copy.serial_no',
+                                  'machine_copy.dno_number',
+                                  'machine_copy.segment',
+                                  'machine_copy.type_color_x_bk',
+                                  'machine_copy.type_of_machine',
+                                  'machine_copy.remark',
+                                  'machine_copy.status',
+                              //--------------------------------------
+                                  // 'customer.id',
+                                  'customer.customer_name',
+                                  'customer.customer_code',
+                              //--------------------------------------
+                                  'contract_rental.id',
+                                  'contract_rental.contract_number',
+                                  'contract_rental.start_contract',
+                                  'contract_rental.end_contract',
+                                  'contract_rental.create_by',
+                              //--------------------------------------
+                                  'customer_x_machine.customer_id',
+                                  'customer_x_machine.contract_id',
+                                  'customer_x_machine.machine_id',
+                                 )
+                          ->get();
+
+      $brands = [ 1 => 'CANON',
+                  2 => 'EPSON',
+                  3 => 'HP',
+                  4 => 'KYOCERA',
+                  5 => 'SAMSUNG',
+                  6 => 'OTHERS',
+                ];
 
       $type_of_machine = [ 1 => 'new',
                            2 => 'demo',
@@ -53,8 +96,11 @@ class MachineController extends Controller
                          ];
 
       return view('employee.machine_copy',[
-        'data_machine'  =>  $data_machine,
-        'type_of_machine'  =>  $type_of_machine
+        'data_tbl1_machine' => $data_tbl1_machine,
+        'data_tbl2_machine' => $data_tbl2_machine,
+        'brands'           =>  $brands,
+        'type_of_machine'  =>  $type_of_machine,
+
       ]);
     }
 
@@ -62,9 +108,6 @@ class MachineController extends Controller
 
     public function machine_copy_create()
     {
-      $dno_status = [ 1 => 'RPE',
-                      2 => 'RRP'
-                    ];
 
       $brands = DB::table('ref_brands')->get();
 
@@ -76,7 +119,6 @@ class MachineController extends Controller
                          ];
 
       return view('employee.machine_copy_create',[
-        'dno_status'  =>  $dno_status,
         'brands'      =>  $brands,
         'segment'     =>  $segment,
         'type_of_machine'  =>  $type_of_machine,
@@ -94,7 +136,6 @@ class MachineController extends Controller
         "model"         =>  $request->model,
         "serial_no"     =>  $request->serial_no,
         "dno_number"    =>  $request->dno_number,
-        "dno_status"    =>  $request->dno_status,
         "segment"       =>  $request->segment,
         "type_of_machine"  =>  $request->type_of_machine,
         "type_color_x_bk"  =>  $request->type_color_x_bk,

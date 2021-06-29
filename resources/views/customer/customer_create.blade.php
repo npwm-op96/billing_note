@@ -292,15 +292,15 @@
                     <div class="row">
                       <div class="col-md-4">
                         <label><font color="blue"> สถานที่วางบิล </font></label>
-                          <select class="form-control" name="location_billing" id="selectBoxaa" onchange="changeFunca();" required>
+                          <select class="form-control" name="location_billing" id="selectBoxaa" onchange="changeFunca();" >
                             <option value="" disabled="true" selected="true" > - กรุณาเลือก -</option>
                             <option value="สำนักงานใหญ่"> สำนักงานใหญ่ </option>
                             <option value="สาขา"> สาขา </option>
                           </select>
-                          <!-- <br> -->
-                          <!-- IF select สาขา Show input textboxesaa -->
-                          <input type="text" class="form-control" name="location_branch_billing" placeholder="โปรดระบุสาขา"
-                                 style="display: none" id="textboxesaa" required>
+                          <br>
+                            <!-- IF select สาขา Show input textboxesaa -->
+                            <input type="text" class="form-control" name="location_branch_billing" placeholder="โปรดระบุสาขา"
+                                   style="display: none" id="textboxesaa" >
                       </div>
                     </div>
                     <br>
@@ -311,7 +311,7 @@
                         <div class="form-group clearfix">
                           <div class="icheck-primary d-inline">
                             <input type="radio" id="radioPrimary1" name="SelectboxPrimary" value="other">
-                            <label for="radioPrimary1">รายสัปดาห์</label>
+                            <label for="radioPrimary1"> รายสัปดาห์ </label>
                               <select class="form-control" name="weekly_billing" id="otherAnswer" style="display:none;">
                                   <option value=""> - กรุณาเลือก -</option>
                                   <option value="วันอาทิตย์"> วันอาทิตย์ </option>
@@ -336,7 +336,7 @@
                             <input type="radio" id="radioPrimary2" name="SelectboxPrimary" value="other2">
                             <label for="radioPrimary2">รายเดือน</label>
                                 <select class="form-control" name="monthly_billing" id="otherAnswer2" style="display:none;">
-                                  <option value=""> - กรุณาเลือก -</option>
+                                  <option value=""> - เลือกวันที่ - </option>
                                   @foreach($monthly as $value)
                                     <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
                                   @endforeach
@@ -353,18 +353,33 @@
                             <input type="radio" id="radioPrimary9" name="SelectboxPrimary" value="other9">
                             <label for="radioPrimary9"> กำหนดวันที่แน่นอน </label>
                                 <select class="form-control" name="fixdate_billing_1" id="otherAnswer9" style="display:none;">
-                                  <option value=""> - กรุณาเลือก -</option>
+                                  <option value=""> - เลือกวันที่ - </option>
                                   @foreach($monthly as $value)
                                     <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
                                   @endforeach
                                 </select>
 
                                 <select class="form-control" name="fixdate_billing_2" id="otherAnswer10" style="display:none;">
-                                  <option value=""> - กรุณาเลือก -</option>
+                                  <option value=""> - เลือกวันที่ - </option>
                                   @foreach($monthly as $value)
                                     <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
                                   @endforeach
                                 </select>
+
+                                <select class="form-control" name="fixdate_billing_3" id="otherAnswer11" style="display:none;">
+                                  <option value=""> - เลือกวันที่ - </option>
+                                  @foreach($monthly as $value)
+                                    <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
+                                  @endforeach
+                                </select>
+
+                                <select class="form-control" name="fixdate_billing_4" id="otherAnswer12" style="display:none;">
+                                  <option value=""> - เลือกวันที่ - </option>
+                                  @foreach($monthly as $value)
+                                    <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
+                                  @endforeach
+                                </select>
+
                           </div>
                         </div>
                       </div>
@@ -407,15 +422,15 @@
                     <div class="row">
                       <div class="col-md-4">
                         <label><font color="red"> สถานที่รับเงิน </font></label>
-                          <select class="form-control" name="location_check" id="selectBoxbb" onchange="changeFuncnb();" required>
+                          <select class="form-control" name="location_check" id="selectBoxbb" onchange="changeFuncnb();" >
                               <option value="" disabled="true" selected="true" > - กรุณาเลือก -</option>
                               <option value="สำนักงานใหญ่"> สำนักงานใหญ่ </option>
                               <option value="สาขา"> สาขา </option>
                           </select>
-                          <!-- <br> -->
-                          <!-- IF select สาขา Show input textboxesbb -->
-                          <input type="text" class="form-control" name="location_branch_check" placeholder="โปรดระบุสาขา"
-                                 style="display: none" id="textboxesbb" required>
+                          <br>
+                            <!-- IF select สาขา Show input textboxesbb -->
+                            <input type="text" class="form-control" name="location_branch_check" placeholder="โปรดระบุสาขา"
+                                   style="display: none" id="textboxesbb" >
                       </div>
                     </div>
                     <br>
@@ -452,7 +467,7 @@
                               <input type="radio" id="radioDanger5" name="SelectDanger" value="other5">
                               <label for="radioDanger5">รายเดือน</label>
                                   <select class="form-control" name="monthly_check" id="otherAnswer5" style="display:none;">
-                                      <option value=""> - กรุณาเลือก -</option>
+                                      <option value=""> - เลือกวันที่ - </option>
                                     @foreach($monthly as $value)
                                       <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
                                     @endforeach
@@ -469,14 +484,28 @@
                               <input type="radio" id="radioDanger7" name="SelectDanger" value="other7">
                               <label for="radioDanger7"> กำหนดวันที่แน่นอน </label>
                                   <select class="form-control" name="fixdate_check_1" id="otherAnswer7" style="display:none;">
-                                      <option value=""> - กรุณาเลือก -</option>
+                                      <option value=""> - เลือกวันที่ - </option>
                                     @foreach($monthly as $value)
                                       <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
                                     @endforeach
                                   </select>
 
                                   <select class="form-control" name="fixdate_check_2" id="otherAnswer8" style="display:none;">
-                                      <option value=""> - กรุณาเลือก -</option>
+                                      <option value=""> - เลือกวันที่ - </option>
+                                    @foreach($monthly as $value)
+                                      <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
+                                    @endforeach
+                                  </select>
+
+                                  <select class="form-control" name="fixdate_check_3" id="otherAnswer13" style="display:none;">
+                                      <option value=""> - เลือกวันที่ - </option>
+                                    @foreach($monthly as $value)
+                                      <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
+                                    @endforeach
+                                  </select>
+
+                                  <select class="form-control" name="fixdate_check_4" id="otherAnswer14" style="display:none;">
+                                      <option value=""> - เลือกวันที่ - </option>
                                     @foreach($monthly as $value)
                                       <option value="{{ $value->id }}"> {{ $value->monthly }} </option>
                                     @endforeach
@@ -689,7 +718,7 @@
     </script>
     <!-- END billing_date -->
 
-    <!-- billing_date -->
+    <!-- check_date -->
       <script>
           $(document).ready(function() {
               $("input[type='radio']").change(function() {
@@ -718,7 +747,7 @@
                   }
               });
           });
-          //fixdate_check_1  &&  fixdate_check_2
+          //fixdate_check_1 || fixdate_check_2 || fixdate_check_3 || fixdate_check_4
           $(document).ready(function() {
               $("input[type='radio']").change(function() {
                   if ($(this).val() == "other7") {
@@ -737,7 +766,26 @@
                   }
               });
           });
-          //fixdate_billing_1  &&  fixdate_billing_2
+          $(document).ready(function() {
+              $("input[type='radio']").change(function() {
+                  if ($(this).val() == "other7") {
+                      $("#otherAnswer13").show();
+                  } else {
+                      $("#otherAnswer13").hide();
+                  }
+              });
+          });
+          $(document).ready(function() {
+              $("input[type='radio']").change(function() {
+                  if ($(this).val() == "other7") {
+                      $("#otherAnswer14").show();
+                  } else {
+                      $("#otherAnswer14").hide();
+                  }
+              });
+          });
+
+          //fixdate_billing_1 || fixdate_billing_2 || fixdate_billing_3 || fixdate_billing_4
           $(document).ready(function() {
               $("input[type='radio']").change(function() {
                   if ($(this).val() == "other9") {
@@ -756,8 +804,26 @@
                   }
               });
           });
+          $(document).ready(function() {
+              $("input[type='radio']").change(function() {
+                  if ($(this).val() == "other9") {
+                      $("#otherAnswer11").show();
+                  } else {
+                      $("#otherAnswer11").hide();
+                  }
+              });
+          });
+          $(document).ready(function() {
+              $("input[type='radio']").change(function() {
+                  if ($(this).val() == "other9") {
+                      $("#otherAnswer12").show();
+                  } else {
+                      $("#otherAnswer12").hide();
+                  }
+              });
+          });
       </script>
-      <!-- END billing_date -->
+      <!-- END check_date -->
 
   <!-- END Onclick radio button show -->
 

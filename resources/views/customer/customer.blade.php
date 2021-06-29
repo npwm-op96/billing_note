@@ -74,15 +74,14 @@
                 <table id="example1" class="table table-bordered table-striped table-reponsive table-sm">
                   <thead class="text-nowrap" style="background-color: #FFF9F9;">
                     <tr>
-                      <th class="text-nowrap" style="text-align: center"> ลำดับ </th>
-                      <th class="text-nowrap" style="text-align: center"> ชื่อลูกค้า / บริษัท </th>
-                      <th class="text-nowrap" style="text-align: center"> รหัสลูกค้า </th>
-                      <th class="text-nowrap" style="text-align: center"> ประเภท </th>
-                      <!-- <th class="text-nowrap" style="text-align: center"> ข้อมูลการติดต่อ </th> -->
-                      <th class="text-nowrap" style="text-align: center"> วันที่วางบิล </th>
-                      <th class="text-nowrap" style="text-align: center"> วันที่รับเงิน </th>
-                      <th class="text-nowrap" style="text-align: center"> สถานะลูกค้า </th>
-                      <th class="text-nowrap" style="text-align: center"> Action </th>
+                      <th class="text-center"> ลำดับ </th>
+                      <th class="text-center"> รหัสลูกค้า </th>
+                      <th class="text-center"> ชื่อลูกค้า / บริษัท </th>
+                      <th class="text-center"> ประเภท </th>
+                      <th class="text-center"> วันที่วางบิล </th>
+                      <th class="text-center"> วันที่รับเงิน </th>
+                      <th class="text-center"> สถานะลูกค้า </th>
+                      <th class="text-center"> Action </th>
                     </tr>
                   </thead>
 
@@ -92,27 +91,34 @@
                     @endphp
                       @foreach($table_customer as $value)
                       <tr>
-                        <td class="text-nowrap" style="text-align: center"> {{ $i }} </td>
+                        <td class="text-center"> {{ $i }} </td>
+                        <td class="text-center text-primary"> {{ $value->customer_code }} </td>
                         <td> {{ $value->customer_name }} </td>
-                        <td class="text-nowrap text-primary" style="text-align: center"> {{ $value->customer_code }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::Get_Customer_type($value->customer_type)['customer_type'] }} </td>
-                        <!-- <td class="text-nowrap" style="text-align: center"> {{-- $value->telephone --}} </td> -->
-                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::DateThai($value->billing_date) }} </td>
-                        <td class="text-nowrap" style="text-align: center"> {{ CmsHelper::DateThai($value->check_date) }} </td>
-                        <td class="text-nowrap" style="text-align: center">
+                        <td class="text-center"> {{ CmsHelper::Get_Customer_type($value->customer_type)['customer_type'] }} </td>
+                        <td class="text-center"> {{ CmsHelper::DateThai($value->billing_date) }} </td>
+                        <td class="text-center"> {{ CmsHelper::DateThai($value->check_date) }} </td>
+                        <td class="text-center">
                           @if($value->status == NULL)
                             <span class="badge bg-success badge-pill"> Active </span>
                           @elseif($value->status == "1")
                             <span class="badge bg-secondary badge-pill"> Inactive </span>
                           @endif
-                          </td>
+                        </td>
 
-                        <td class="text-nowrap" style="text-align: center">
-                          <!-- View -->
+                        <td class="text-center">
+                           <!-- ADD Contract -->
+                           <a href="{{ route('customer_contract.create', [ 'id' => $value->id ]) }}">
+                             <button type="button" class="btn btn-md" style="background-color: #59809a;" title="Add-Contract">
+                               <i class="fas fa-plus-circle"></i>
+                             </button>
+                            </a>
+                           <!-- END ADD Contract -->
+
+                          <!-- Details -->
                             <button type="button" class="btn btn-info btn-md" title="Details" data-toggle="modal" data-target="#CustomerModal{{ $value->id }}">
                               <i class="fas fa-bars"></i>
                             </button>
-                          <!-- END View -->
+                          <!-- END Details -->
 
                           <!-- Edit -->
                           <a href="{{ route('customer.edit', [ 'id' => $value->id ]) }}">
@@ -122,13 +128,11 @@
                          </a>
                          <!-- END Edit -->
 
-                         <!-- ADD Contract -->
-                         <a href="{{ route('customer_contract.create', [ 'id' => $value->id ]) }}">
-                           <button type="button" class="btn btn-md" style="background-color: #ff851b;" title="Add-Contract">
-                             <i class="fas fa-plus-circle"></i>
+                         <!-- Delete -->
+                           <button type="button" class="btn btn-danger btn-md" title="Delete" data-toggle="modal">
+                             <i class="fas fa-trash-alt"></i>
                            </button>
-                          </a>
-                         <!-- END ADD Contract -->
+                         <!-- END Delete -->
                         </td>
 
 

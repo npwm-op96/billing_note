@@ -88,17 +88,6 @@
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label> สถานะ DNO </label><font color="red"> * </font>
-                          <select class="form-control" name="dno_status" required>
-                              <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
-                            @foreach($dno_status as $key => $value)
-                              <option value="{{$key}}"> {{$value}} </option>
-                            @endforeach
-                          </select>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
                         <label> Segment </label><font color="red"> * </font>
                         <select class="form-control" name="segment" required>
                             <option value="" disabled="true" selected="true"> - กรุณาเลือก - </option>
@@ -106,6 +95,15 @@
                             <option value="{{ $value->id }}"> {{ $value->segment }} </option>
                           @endforeach
                         </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> B&W / Colour </label><font color="red"> * </font>
+                          <select class="form-control" name="type_color_x_bk" required>
+                            <option value="B&W"> B&W </option>
+                            <option value="Colour"> Colour </option>
+                          </select>
                       </div>
                     </div>
                   </div>
@@ -120,15 +118,6 @@
                             <option value="{{ $key }}"> {{ $value }} </option>
                           @endforeach
                         </select>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label> B&W / Colour </label><font color="red"> * </font>
-                          <select class="form-control" name="type_color_x_bk" required>
-                            <option value="B&W"> B&W </option>
-                            <option value="Colour"> Colour </option>
-                          </select>
                       </div>
                     </div>
                   </div>

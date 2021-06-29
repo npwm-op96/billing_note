@@ -266,13 +266,13 @@
                   </div>
                   <hr>
 
-
+                  <h3><b> A4 </b></h3>
                   <div class="form-horizontal">
                     <div class="form-group row">
                       <label class="col-md-2 col-form-label"> ถ่ายเอกสารขาว-ดำ <br>ค่าบริการ สำเนาละ </label>
                         <div class="col-md-4">
                           <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="rate_bk_service"
+                            <input type="text" class="form-control" name="a4_bk_service"
                                    onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลขเท่านั้น !'); this.value='';}">
                               <div class="input-group-append">
                                 <span class="input-group-text"><i class="fab fa-bitcoin"></i></span>
@@ -284,7 +284,7 @@
                       <label class="col-md-2 col-form-label"> <font color="red"> ถ่ายเอกสารสี </font><br> ค่าบริการ สำเนาละ </label>
                         <div class="col-md-4">
                           <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="rate_color_service"
+                            <input type="text" class="form-control" name="a4_color_service"
                                    onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลขเท่านั้น !'); this.value='';}">
                               <div class="input-group-append">
                                 <span class="input-group-text"><i class="fab fa-bitcoin"></i></span>
@@ -293,6 +293,36 @@
                         </div>
                     </div>
                   </div>
+
+
+                  <h3><b> A3 </b></h3>
+                  <div class="form-horizontal">
+                    <div class="form-group row">
+                      <label class="col-md-2 col-form-label"> ถ่ายเอกสารขาว-ดำ <br>ค่าบริการ สำเนาละ </label>
+                        <div class="col-md-4">
+                          <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="a3_bk_service"
+                                   onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลขเท่านั้น !'); this.value='';}">
+                              <div class="input-group-append">
+                                <span class="input-group-text"><i class="fab fa-bitcoin"></i></span>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-2 col-form-label"> <font color="red"> ถ่ายเอกสารสี </font><br> ค่าบริการ สำเนาละ </label>
+                        <div class="col-md-4">
+                          <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="a3_color_service"
+                                   onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลขเท่านั้น !'); this.value='';}">
+                              <div class="input-group-append">
+                                <span class="input-group-text"><i class="fab fa-bitcoin"></i></span>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
                   <hr>
 
 

@@ -88,9 +88,10 @@
                     </div>
                   </form>
                 </div>
-                  </div>
-                    </div>
-                <!-- /.card -->
+              </div>
+
+            </div>
+            <!-- /.card -->
 
 
 

@@ -44,7 +44,8 @@
 
       <div class="row">
         <div class="col-md-12 text-center">
-          <a href="{{ route('our.create') }}">
+          <a href="#">
+          <!-- <a href="{{-- route('our.create') --}}"> -->
             <button type="button" class="btn btn-info float-right" style=" height: 50px; padding:10px 40px;">
               <i class="fas fa-plus-circle"></i>
                 เพิ่มข้อมูลพนักงาน

@@ -24,11 +24,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
-        <!-- <div class="col-sm-6">
-          <h1>General Form</h1>
-        </div> -->
-        <div class="col-sm-12">
+      <div class="row mb-2 justify-content-md-center">
+        <!-- <div class="col-sm-11"> -->
+          <!-- <h1>General Form</h1> -->
+        <!-- </div> -->
+        <div class="col-sm-11">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
             <li class="breadcrumb-item active"> ข้อมูลเครื่องพิมพ์ / อุปกรณ์ </li>
@@ -39,9 +39,11 @@
   </section>
 
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-11">
 
       <div class="row">
         <div class="col-md-12 text-center">
@@ -56,12 +58,12 @@
       </div>
       <br>
 
-      <!-- DATA TABLE -->
+      <!-- DATA TABLE 1 -->
       <div class="row">
         <div class="col-md-12">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title"> <i class="fas fa-id-card"></i> <b>ข้อมูลเครื่องพิมพ์ / อุปกรณ์</b></h3>
+              <h3 class="card-title"> <i class="fas fa-print"></i> <b>ข้อมูลเครื่องพิมพ์ / อุปกรณ์</b></h3>
             </div>
 
             <div class="card-body">
@@ -74,8 +76,8 @@
                       <th class="text-center"> รุ่น </th>
                       <th class="text-center"> Serial No. </th>
                       <th class="text-center"> หมายเลข DNO </th>
-                      <th class="text-center"> ประเภทอุปกรณ์ </th>
                       <th class="text-center"> B&W / Colour </th>
+                      <th class="text-center"> ประเภทอุปกรณ์ </th>
                       <th class="text-center"> สถานะเครื่อง </th>
                       <th class="text-center"> Actions </th>
                     </tr>
@@ -85,14 +87,13 @@
                     @php
                       $i = 1;
                     @endphp
-                    @foreach($data_machine as $value)
+                    @foreach($data_tbl1_machine as $value)
                       <tr>
                         <td class="text-center"> {{ $i }} </td>
-                        <td> {{ $value->brands }} </td>
+                        <td> {{ $brands [$value->brands] }} </td>
                         <td> {{ $value->model }} </td>
                         <td class="text-center text-danger"> {{ $value->serial_no }} </td>
                         <td class="text-center text-primary"> {{ $value->dno_number }} </td>
-                        <td class="text-center"> {{ $type_of_machine [$value->type_of_machine] }} </td>
                         <td class="text-center">
                           @if($value->type_color_x_bk =="Colour")
                             <span class="badge bg-danger badge-pill"> Colour </span>
@@ -100,19 +101,133 @@
                             <span class="badge bg-secondary badge-pill"> Black & White </span>
                           @endif
                         </td>
+                        <td class="text-center"> {{ $type_of_machine [$value->type_of_machine] }} </td>
                         <td class="text-center">
                           @if($value->status == NULL)
-                            <span class="badge bg-success badge-pill"> ว่าง </span>
+                            <span class="badge bg-success badge-pill"> Active </span>
                           @elseif($value->status == "1")
-                            <span class="badge bg-secondary badge-pill"> ไม่ว่าง </span>
+                            <span class="badge bg-secondary badge-pill"> Inactive </span>
                           @endif
                         </td>
                         <td class="text-center">
-                          <!-- status -->
-                            <button type="button" class="btn btn-warning btn-md" title="status" data-toggle="modal" data-target="#StatusModal{{ $value->id }}">
-                              <i class="fas fa-pen-alt"></i>
+                          <!-- Edit -->
+                            <button type="button" class="btn btn-warning btn-md" title="Edit" data-toggle="modal" data-target="#ActiveModal{{ $value->id }}">
+                              <i class="fas fa-edit"></i>
                             </button>
-                          <!-- END status -->
+                          <!-- END Edit -->
+
+                          <!-- Delete -->
+                            <button type="button" class="btn btn-danger btn-md" title="Delete" data-toggle="modal">
+                              <i class="fas fa-trash-alt"></i>
+                            </button>
+                          <!-- END Delete -->
+                        </td>
+
+
+                            <!-- MODAL StatusModal -->
+                            <div class="modal fade" id="ActiveModal{{ $value->id }}">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title"><b> สถานะเครื่องพิมพ์/อุปกรณ์ ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                      <p> <b>เลข ID สัญญา</b> : {{ $value->contract_id }} </p>
+                                      <p> <b>เลขที่สัญญา</b> : {{ $value->contract_number }} </p>
+                                      <p> <b><font color = "blue">วันที่เริ่มสัญญา</font></b> : {{ CmsHelper::DateThai($value->start_contract) }} </p>
+                                      <p> <b><font color = "red">วันที่สิ้นสุดสัญญา</font></b> : {{ CmsHelper::DateThai($value->end_contract) }} </p>
+
+                                    <hr>
+                                      <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
+                                      <p> <b>ชื่อลูกค้า / บริษัท</b> : {{ $value->customer_name }} </p>
+
+                                  </div> <!-- END modal-bodyl -->
+                                </div>
+                              </div>
+                            </div>
+                            <!-- END MODAL StatusModal -->
+
+                      </tr>
+                      @php
+                        $i++;
+                      @endphp
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Col DataTable 1 -->
+      </div> <!-- Row DataTable 1 -->
+      <br>
+      <hr>
+      <br>
+
+
+
+      <!-- DATA TABLE 2 (**มีสัญญาเช่าแล้ว) -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-danger card-outline">
+            <div class="card-header">
+              <h3 class="card-title"> <i class="fas fa-newspaper"></i> <b> ข้อมูลเครื่องพิมพ์ / อุปกรณ์ <font color = "red"> (**มีสัญญาเช่าลูกค้าแล้ว) </font></b></h3>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive hover">
+                <table id="example6" class="table table-bordered table-striped table-reponsive table-sm">
+                  <thead class="text-nowrap" style="background-color: #F0F8FF;">
+                    <tr>
+                      <th class="text-center"> ลำดับ </th>
+                      <th class="text-center"> เลขที่สัญญา </th>
+                      <th class="text-center"> ยี่ห้อ </th>
+                      <th class="text-center"> รุ่น </th>
+                      <th class="text-center"> Serial No. </th>
+                      <th class="text-center"> หมายเลข DNO </th>
+                      <th class="text-center"> B&W / Colour </th>
+                      <th class="text-center"> ประเภทอุปกรณ์ </th>
+                      <th class="text-center"> สถานะเครื่อง </th>
+                      <th class="text-center"> Actions </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    @php
+                      $i = 1;
+                    @endphp
+                    @foreach($data_tbl2_machine as $value)
+                      <tr>
+                        <td class="text-center"> {{ $i }} </td>
+                        <td class="text-center"> {{ $value->id }} </td>
+                        <td> {{ $brands [$value->brands] }} </td>
+                        <td> {{ $value->model }} </td>
+                        <td class="text-center text-danger"> {{ $value->serial_no }} </td>
+                        <td class="text-center text-primary"> {{ $value->dno_number }} </td>
+                        <td class="text-center">
+                          @if($value->type_color_x_bk =="Colour")
+                            <span class="badge bg-danger badge-pill"> Colour </span>
+                          @elseif($value->type_color_x_bk == "B&W")
+                            <span class="badge bg-secondary badge-pill"> Black & White </span>
+                          @endif
+                        </td>
+                        <td class="text-center"> {{ $type_of_machine [$value->type_of_machine] }} </td>
+                        <td class="text-center">
+                          @if($value->status == NULL)
+                            <span class="badge bg-success badge-pill"> Active </span>
+                          @elseif($value->status == "1")
+                            <span class="badge bg-secondary badge-pill"> Inactive </span>
+                          @endif
+                        </td>
+                        <td class="text-center">
+                          <!-- Details -->
+                            <button type="button" class="btn btn-info btn-md" title="Details" data-toggle="modal" data-target="#StatusModal{{ $value->id }}">
+                              <i class="fas fa-bars"></i>
+                            </button>
+                          <!-- END Details -->
                         </td>
 
 
@@ -127,25 +242,17 @@
                                     </button>
                                   </div>
                                   <div class="modal-body">
-                                    <div class="row">
-                                      <div class="col-md-12">
-                                        <!-- hidden = id -->
-                                        <input type="hidden" class="form-control" name="id" value="{{ $value->id }}">
 
-                                        <select class="form-control" name="verified" >
-                                            <!-- <option value="{{-- $key --}}" {{-- $verified_list == $key ? 'selected' : '' --}}> {{-- $value --}} </option> -->
-                                            <option value=""> ว่าง </option>
-                                            <option value="2"> ไม่ว่าง </option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <br>
-                                  </div>
+                                      <p> <b>เลข ID สัญญา</b> : {{ $value->contract_id }} </p>
+                                      <p> <b>เลขที่สัญญา</b> : {{ $value->contract_number }} </p>
+                                      <p> <b><font color = "blue">วันที่เริ่มสัญญา</font></b> : {{ CmsHelper::DateThai($value->start_contract) }} </p>
+                                      <p> <b><font color = "red">วันที่สิ้นสุดสัญญา</font></b> : {{ CmsHelper::DateThai($value->end_contract) }} </p>
 
-                                      <div class="card-footer">
-                                        <button type="button" class="btn btn-primary float-right"> บันทึกข้อมูล </button>
-                                      </div>
+                                    <hr>
+                                      <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
+                                      <p> <b>ชื่อลูกค้า / บริษัท</b> : {{ $value->customer_name }} </p>
 
+                                  </div> <!-- END modal-bodyl -->
                                 </div>
                               </div>
                             </div>
@@ -162,17 +269,15 @@
               </div>
             </div>
           </div>
-        </div> <!-- Col DataTable -->
-      </div> <!-- Row DataTable -->
+        </div> <!-- Col DataTable 2 -->
+      </div> <!-- Row DataTable 2 -->
 
 
-
-
-
-
-    </div><!-- /.container-fluid -->
-  </section>
-  <!-- /.content -->
+    </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 @stop
@@ -202,7 +307,14 @@
       "searching": true,
       // "buttons": ["excel", "print"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example6').DataTable({
+    $("#example6").DataTable({
+      "responsive": true,
+      "lengthChange": false,
+      "autoWidth": false,
+      "searching": true,
+      // "buttons": ["excel", "print"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example7').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,

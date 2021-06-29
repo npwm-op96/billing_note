@@ -70,10 +70,10 @@
                 <table id="example1" class="table table-bordered table-striped table-reponsive table-sm">
                   <thead class="text-nowrap" style="background-color: #FFF9F9;">
                     <tr>
-                      <th class="text-center"> ลำดับ </th>
+                      <th class="text-center"> เลข ID </th>
+                      <th class="text-center"> เลขที่สัญญา </th>
                       <th class="text-center"> รหัสลูกค้า </th>
                       <th class="text-center"> ชื่อลูกค้า / บริษัท </th>
-                      <th class="text-center"> เลขที่สัญญา </th>
                       <th class="text-center"> ประเภทสัญญา </th>
                       <th class="text-center"> วันที่ส่งเครื่อง </th>
                       <th class="text-center"> วันที่เริ่มต้นสัญญา </th>
@@ -88,10 +88,10 @@
                     @endphp
                     @foreach($customer_contract as $value)
                       <tr>
-                        <td> {{ $i }} </td>
+                        <td class="text-center"> {{ $value->id }} </td>
+                        <td class="text-center text-primary"> {{ $value->contract_number }} </td>
                         <td class="text-center"> {{ $value->customer_code }} </td>
                         <td> {{ $value->customer_name }} </td>
-                        <td class="text-center text-primary"> {{ $value->contract_number }} </td>
                         <td class="text-center">
                            @if($value->contract_type == "1")
                               <span class="badge badge-pill" style="background-color: #B0C4DE;"> {{ $contract_type [ $value->contract_type ] }} </span>
@@ -109,11 +109,11 @@
                         <td class="text-center"> {{ CmsHelper::DateThai($value->start_contract) }} </td>
                         <td class="text-center"> {{ CmsHelper::DateThai($value->end_contract) }} </td>
                         <td class="text-center">
-                          <!-- View -->
+                          <!-- Details -->
                               <button type="button" class="btn btn-info btn-md" title="Details" data-toggle="modal" data-target="#ContractModal{{ $value->id }}">
                                 <i class="fas fa-bars"></i>
                               </button>
-                          <!-- END View -->
+                          <!-- END Details -->
 
                           <!-- Edit -->
                             <!-- <a href="{{-- route('customer_contract.edit', [ 'id' => $value->id ]) --}}"> -->
