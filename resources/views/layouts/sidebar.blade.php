@@ -39,22 +39,6 @@
               </a>
             </li>
           </ul>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ route('our.machine_copy') }}" class="nav-link {{ active_route('our.machine_copy') }} ">
-                <i class="far fa-circle nav-icon text-info"></i>
-                <p> ข้อมูลเครื่องพิมพ์ / อุปกรณ์  </p>
-              </a>
-            </li>
-          </ul>
-          <!-- <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{-- route('our.price') --}}" class="nav-link {{-- active_route('our.price') --}} ">
-                <i class="far fa-circle nav-icon text-info"></i>
-                <p> เรทราคา </p>
-              </a>
-            </li>
-          </ul> -->
         </li>
 
 
@@ -63,6 +47,14 @@
             <i class="nav-icon fas fa-user-check"></i>
             <p> ข้อมูลหลัก : ลูกค้า </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('customer.machine_copy') }}" class="nav-link {{ active_route('customer.machine_copy') }} ">
+                <i class="far fa-circle nav-icon text-warning"></i>
+                <p> ข้อมูลเครื่อง  </p>
+              </a>
+            </li>
+          </ul>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="{{ route('customer.index') }}" class="nav-link {{ active_route('customer.index') }} ">
@@ -75,7 +67,7 @@
             <li class="nav-item">
               <a href="{{ route('customer.contract') }}" class="nav-link {{ active_route('customer.contract') }}  ">
                 <i class="far fa-circle nav-icon text-warning"></i>
-                <p> สัญญาเช่าลูกค้า </p>
+                <p> สัญญาเช่า </p>
               </a>
             </li>
           </ul>

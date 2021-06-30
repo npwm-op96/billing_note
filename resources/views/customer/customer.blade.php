@@ -107,7 +107,7 @@
 
                         <td class="text-center">
                            <!-- ADD Contract -->
-                           <a href="{{ route('customer_contract.create', [ 'id' => $value->id ]) }}">
+                           <a href="{{ route('customer_contract.create', [ 'customer_id' => $value->id ]) }}">
                              <button type="button" class="btn btn-md" style="background-color: #59809a;" title="Add-Contract">
                                <i class="fas fa-plus-circle"></i>
                              </button>
@@ -158,14 +158,14 @@
                                         <p> <b>สถานที่วางบิล</b> : {{ $value->location_billing." ".$value->location_branch_billing }} <br>
                                         <p> <b>รายสัปดาห์</b> : {{ $value->weekly_billing }} <br>
                                         <p> <b>รายเดือน</b> : {{ $value->monthly_billing }} <br>
-                                        <p> <b>วันที่แน่นอน</b> : {{ $value->fixdate_billing_1." , ".$value->fixdate_billing_2 }} <br>
+                                        <p> <b>วันที่แน่นอน</b> : {{ $value->fixdate_billing_1." , ".$value->fixdate_billing_2 }} {{ $value->fixdate_billing_3." , ".$value->fixdate_billing_4 }} <br>
                                         <p> <b>ช่วงวันที่</b> : {{ CmsHelper::DateThai($value->billing_date) }} <b>ถึง</b> {{ CmsHelper::DateThai($value->billing_date_2) }} </p>
                                       <hr>
                                         <p> <b><font color = "red">วันที่รับเงิน</font></b> </p>
                                         <p> <b>สถานที่วางบิล</b> : {{ $value->location_check." ".$value->location_branch_check }} <br>
                                         <p> <b>รายสัปดาห์</b> : {{ $value->weekly_check }} <br>
                                         <p> <b>รายเดือน</b> : {{ $value->monthly_check }} <br>
-                                        <p> <b>วันที่แน่นอน</b> : {{ $value->fixdate_check_1." , ".$value->fixdate_check_2 }} <br>
+                                        <p> <b>วันที่แน่นอน</b> : {{ $value->fixdate_check_1." , ".$value->fixdate_check_2 }} {{ $value->fixdate_check_3." , ".$value->fixdate_check_4 }} <br>
                                         <p> <b>ช่วงวันที่</b> : {{ CmsHelper::DateThai($value->check_date) }} <b>ถึง</b> {{ CmsHelper::DateThai($value->check_date_2) }} </p>
                                         </p>
                                       <hr>
@@ -175,17 +175,24 @@
                                             <b>ไลน์ไอดี</b> : {{ $value->line }}
                                         </p>
                                       <!-- <hr> -->
-                                        <p> <b>ชื่อผู้ติดต่อ (ท่านที่ 2)</b> : {{ $value->contact_2 }} <br>
-                                            <b>เบอร์โทร</b> : {{ $value->telephone_2 }} <br>
-                                            <b>E-Mail</b> : {{ $value->customer_email_2 }} <br>
-                                            <b>ไลน์ไอดี</b> : {{ $value->line_2 }}
-                                        </p>
-                                        <!-- <hr> -->
-                                        <p> <b>ชื่อผู้ติดต่อ (ท่านที่ 3)</b> : {{ $value->contact_3 }} <br>
-                                            <b>เบอร์โทร</b> : {{ $value->telephone_3 }} <br>
-                                            <b>E-Mail</b> : {{ $value->customer_email_3 }} <br>
-                                            <b>ไลน์ไอดี</b> : {{ $value->line_3 }}
-                                        </p>
+                                      @if($value->contact_2 == NULL)
+                                          <!-- NO SHOW DATA -> Null -->
+                                      @else
+                                          <p> <b>ชื่อผู้ติดต่อ (ท่านที่ 2)</b> : {{ $value->contact_2 }} <br>
+                                              <b>เบอร์โทร</b> : {{ $value->telephone_2 }} <br>
+                                              <b>E-Mail</b> : {{ $value->customer_email_2 }} <br>
+                                              <b>ไลน์ไอดี</b> : {{ $value->line_2 }}
+                                          </p>
+                                      @endif
+                                      @if($value->contact_3 == NULL)
+                                          <!-- NO SHOW DATA -> Null -->
+                                      @else
+                                          <p> <b>ชื่อผู้ติดต่อ (ท่านที่ 3)</b> : {{ $value->contact_3 }} <br>
+                                              <b>เบอร์โทร</b> : {{ $value->telephone_3 }} <br>
+                                              <b>E-Mail</b> : {{ $value->customer_email_3 }} <br>
+                                              <b>ไลน์ไอดี</b> : {{ $value->line_3 }}
+                                          </p>
+                                      @endif
 
                                       <hr>
                                         <p> <b>โน้ตอื่นๆ</b> : {{ $value->remark }} <br>
@@ -281,5 +288,21 @@
       </script>
     @endif
     <!-- END INSERT success -->
+
+    <!-- EDIT success -->
+      @if(Session::get('savecustomer'))
+       <?php Session::forget('savecustomer'); ?>
+        <script>
+          Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              // confirmButtonColor: '#3085d6',
+              timer: 2200
+          })
+        </script>
+      @endif
+      <!-- END EDIT success -->
 
 @stop

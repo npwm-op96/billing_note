@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','เพิ่มข้อมูลลูกค้าใหม่')
+@section('title','แก้ไขข้อมูลเครื่อง')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -23,91 +23,127 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row mb-2">
-        <!-- <div class="col-sm-6">
-          <h1>General Form</h1>
-        </div> -->
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('customer.index') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('customer.index') }}"> รายละเอียดลูกค้า </a></li>
-            <li class="breadcrumb-item active"> เพิ่มข้อมูลลูกค้าใหม่ </li>
+            <li class="breadcrumb-item active"> แก้ไขข้อมูลเครื่อง </li>
           </ol>
         </div>
       </div>
     </div><!-- /.container-fluid -->
   </section>
 
+
   <!-- Main content -->
-
-
-
-
-
-
-
-
-
-
   <section class="content">
     <div class="container">
 
+      <form action="{{ route('machine.save') }}" method="POST">
+        @csrf
 
-      <div class="row">
-              <!-- left column -->
-              <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Quick Example</h3>
-                  </div>
-                  <!-- /.card-header -->
-                  <!-- form start -->
-                  <form>
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputFile">File input</label>
-                        <div class="input-group">
-                          <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                          </div>
-                          <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                      </div>
-                    </div>
-                    <!-- /.card-body -->
-
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                  </form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card shadow">
+                <div class="card-header" style="background-color: #F0F8FF;">
+                  <h3 class="card-title"><b><i class="fas fa-file-signature"></i> เพิ่มข้อมูลเครื่องพิมพ์ / อุปกรณ์ </b></h3>
                 </div>
-                  </div>
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> ยี่ห้อ </label><font color="red"> * </font>
+                          <!-- hidden = ID -->
+                          <input type="hidden" class="form-control" name="id" value="{{ $edit_machine->id }}">
+
+                          <select class="form-control" name="brands">
+                            @foreach($brands as $value)
+                              <option value="{{ $value->id }}" {{ $edit_machine->brands == $value->id ? 'selected' : '' }}> {{ $value->brands }} </option>
+                            @endforeach
+                          </select>
+                      </div>
                     </div>
-                <!-- /.card -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> รุ่น </label><font color="red"> * </font>
+                        <input type="text" class="form-control" name="model" value="{{ $edit_machine->model }}">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Serial No. </label><font color="red"> * </font>
+                        <input type="text" class="form-control" name="serial_no" value="{{ $edit_machine->serial_no }}">
+                      </div>
+                    </div>
+                  </div>
 
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> หมายเลข DNO </label><font color="red"> * </font>
+                        <input type="text" class="form-control" name="dno_number" value="{{ $edit_machine->dno_number }}">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Segment </label><font color="red"> * </font>
+                        <select class="form-control" name="segment">
+                            @foreach($segment as $value)
+                              <option value="{{ $value->id }}" {{ $edit_machine->segment == $value->id ? 'selected' : '' }}> {{ $value->segment }} </option>
+                            @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> B&W / Colour </label><font color="red"> * </font>
+                          <select class="form-control" name="type_color_x_bk">
+                            @foreach($type_color_x_bk as $key => $value)
+                              <option value="{{ $key }}" {{ $edit_machine->type_color_x_bk == $key ? 'selected' : '' }}> {{ $value }} </option>
+                            @endforeach
+                          </select>
+                      </div>
+                    </div>
+                  </div>
 
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> ประเภทอุปกรณ์ </label><font color="red"> * </font>
+                          <select class="form-control" name="type_of_machine">
+                            @foreach($type_of_machine as $key => $value)
+                              <option value="{{ $key }}" {{ $edit_machine->type_of_machine == $key ? 'selected' : '' }}> {{ $value }} </option>
+                            @endforeach
+                          </select>
+                      </div>
+                    </div>
+                  </div>
 
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label> โน้ตอื่นๆ </label><font color="red"> * (ถ้ามี) </font>
+                        <textarea type="text" class="form-control" name="remark" rows="3"> {{ $edit_machine->remark }} </textarea>
+                      </div>
+                    </div>
+                  </div>
 
+                </div> <!-- END card-body -->
 
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success float-right" value="บันทึกข้อมูล">
+                    <i class="fas fa-save"></i> &nbsp;แก้ไขข้อมูล
+                  </button>
 
-
+                  <!-- <button type="submit" class="btn btn-primary float-right"> แก้ไขข้อมูล </button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+      <!-- /.card -->
+        </form>
 
 
     </div><!-- /.container-fluid -->

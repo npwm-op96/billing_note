@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','ข้อมูลเครื่องพิมพ์ / อุปกรณ์')
+@section('title','ข้อมูลเครื่อง')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -30,8 +30,8 @@
         <!-- </div> -->
         <div class="col-sm-11">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"> ข้อมูลเครื่องพิมพ์ / อุปกรณ์ </li>
+            <li class="breadcrumb-item"><a href="{{ route('customer.index') }}"> ข้อมูลหลัก </a></li>
+            <li class="breadcrumb-item active"> ข้อมูลเครื่อง </li>
           </ol>
         </div>
       </div>
@@ -50,7 +50,7 @@
           <a href="{{ route('our.machine_copy_create') }}">
             <button type="button" class="btn btn-info float-right" style=" height: 50px; padding:10px 40px;">
               <i class="fas fa-plus-circle"></i>
-                เพิ่มข้อมูลอุปกรณ์ใหม่
+                เพิ่มข้อมูลเครื่องใหม่
             </button>
           </a>
 
@@ -63,7 +63,7 @@
         <div class="col-md-12">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title"> <i class="fas fa-print"></i> <b>ข้อมูลเครื่องพิมพ์ / อุปกรณ์</b></h3>
+              <h3 class="card-title"> <i class="fas fa-print"></i> <b>ข้อมูลเครื่อง</b></h3>
             </div>
 
             <div class="card-body">
@@ -111,9 +111,11 @@
                         </td>
                         <td class="text-center">
                           <!-- Edit -->
-                            <button type="button" class="btn btn-warning btn-md" title="Edit" data-toggle="modal" data-target="#ActiveModal{{ $value->id }}">
-                              <i class="fas fa-edit"></i>
-                            </button>
+                            <a href="{{ route('machine.edit',['id' => $value->id]) }}">
+                              <button type="button" class="btn btn-warning btn-md" title="Edit">
+                                <i class="fas fa-edit"></i>
+                              </button>
+                            </a>
                           <!-- END Edit -->
 
                           <!-- Delete -->
@@ -129,7 +131,7 @@
                               <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h4 class="modal-title"><b> สถานะเครื่องพิมพ์/อุปกรณ์ ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
+                                    <h4 class="modal-title"><b> สถานะของเครื่อง ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -174,7 +176,7 @@
         <div class="col-md-12">
           <div class="card card-danger card-outline">
             <div class="card-header">
-              <h3 class="card-title"> <i class="fas fa-newspaper"></i> <b> ข้อมูลเครื่องพิมพ์ / อุปกรณ์ <font color = "red"> (**มีสัญญาเช่าลูกค้าแล้ว) </font></b></h3>
+              <h3 class="card-title"> <i class="fas fa-newspaper"></i> <b> ข้อมูลเครื่อง <font color = "red"> (**มีสัญญาเช่าแล้ว) </font></b></h3>
             </div>
 
             <div class="card-body">
@@ -236,7 +238,7 @@
                               <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h4 class="modal-title"><b> สถานะเครื่องพิมพ์/อุปกรณ์ ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
+                                    <h4 class="modal-title"><b> สถานะเครื่อง ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -348,5 +350,21 @@
       </script>
     @endif
     <!-- END INSERT success -->
+
+    <!-- EDIT success -->
+      @if(Session::get('savemachines'))
+       <?php Session::forget('savemachines'); ?>
+        <script>
+          Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              // confirmButtonColor: '#3085d6',
+              timer: 2200
+          })
+        </script>
+      @endif
+      <!-- END EDIT success -->
 
 @stop

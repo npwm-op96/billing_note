@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','สัญญาเช่าลูกค้า')
+@section('title','สัญญาเช่า')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -30,8 +30,8 @@
         </div> -->
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"> สัญญาเช่าลูกค้า </li>
+            <li class="breadcrumb-item"><a href="{{ route('customer.index') }}"> ข้อมูลหลัก </a></li>
+            <li class="breadcrumb-item active"> สัญญาเช่า </li>
           </ol>
         </div>
       </div>
@@ -62,7 +62,7 @@
         <div class="col-md-12">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title"> <i class="fas fa-building"></i> <b>สัญญาเช่าของลูกค้า</b></h3>
+              <h3 class="card-title"> <i class="fas fa-building"></i> <b>สัญญาเช่า</b></h3>
             </div>
 
             <div class="card-body">
@@ -116,8 +116,7 @@
                           <!-- END Details -->
 
                           <!-- Edit -->
-                            <!-- <a href="{{-- route('customer_contract.edit', [ 'id' => $value->id ]) --}}"> -->
-                            <a href="#">
+                            <a href="{{ route('customer_contract.edit', [ 'id' => $value->id ]) }}">
                               <button type="button" class="btn btn-warning btn-md" title="Edit">
                                 <i class="fas fa-edit"></i>
                               </button>
@@ -131,22 +130,39 @@
                           <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h4 class="modal-title"><b> ข้อมูลลูกค้า ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
+                                <h4 class="modal-title"><b> ข้อมูลสัญญาเช่า ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
                               <div class="modal-body">
 
-                                  <p> <b>ชื่อลูกค้า / บริษัท</b> : {{$value->customer_name}} </p>
-                                <hr>
                                   <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
+                                  <p> <b>ชื่อลูกค้า / บริษัท</b> : {{ $value->customer_name }} </p>
                                 <hr>
-                                  <p> <b><font color = "red">เลขที่สัญญา</font></b> : {{ $value->contract_number }} </p>
+                                  <p> <b>เลข ID สัญญา</b> : {{ $value->id }} </p>
+                                  <p> <b> เลขที่สัญญา </b> : {{ $value->contract_number }} </p>
+                                  <p> <b>ประเภทของสัญญา</b> : {{ $contract_type [$value->contract_type] }} </p>
+                                  <p> <b> จำนวนเครื่อง </b> : {{ $value->number_of_machine }} </p>
+                                  <p> <b><font color = "blue">วันที่เริ่มสัญญา</font></b> : {{ CmsHelper::DateThai($value->start_contract) }} </p>
+                                  <p> <b><font color = "red">วันที่สิ้นสุดสัญญา</font></b> : {{ CmsHelper::DateThai($value->end_contract) }} </p>
+                                  <p> <b> พนักงานขาย </b> : {{ CmsHelper::Get_UserID($value->salesman_id)['create_by'] }} </p>
                                 <hr>
-                                  <p> <font color = "blue"><b>ประเภทของสัญญา</font></b> : {{ $contract_type [$value->contract_type] }} </p>
+                                  <p> <b> ค่าเช่าเครื่อง </b> : {{ $value->rental_cost }}  บาท.</p>
+                                  <p> <b> ค่าอุปกรณ์เสริม (FAX) </b> : {{ $value->utility_1 }} บาท.</p>
+                                  <p> <b> ค่าอุปกรณ์เสริม (Printer) </b> : {{ $value->utility_2 }} บาท.</p>
                                 <hr>
-                                  <p> <b>ผู้บันทึกข้อมูล</b> : {{ CmsHelper::Get_UserID($value->create_by)['create_by'] }} <font color = "red">( {{ CmsHelper::DateThai($value->created_at) }} | เวลา {{ CmsHelper::TimeThai($value->created_at) }} น. ) </font></p>
+                                  <h4> A4 </h4>
+                                    <p> <b> A4 ถ่ายเอกสารขาว-ดำ (ค่าบริการ สำเนาละ) </b> : {{ $value->a4_bk_service }} </p>
+                                    <p> <b> A4 ถ่ายเอกสารสี (ค่าบริการ สำเนาละ) </b> : {{ $value->a4_color_service }} </p>
+                                  <h4> A3 </h4>
+                                    <p> <b> A3 ถ่ายเอกสารขาว-ดำ (ค่าบริการ สำเนาละ) </b> : {{ $value->a3_bk_service }} </p>
+                                    <p> <b> A3 ถ่ายเอกสารสี (ค่าบริการ สำเนาละ) </b> : {{ $value->a3_color_service }} </p>
+                                <hr>
+                                  <p> <b> หักค่ากระดาษเสียให้ฟรีกับลูกค้า </b> : {{ $value->benefit_cost }} %</p>
+                                  <p> <b> เงินประกันความเสียหาย </b> : {{ $value->insurance_cost }} บาท.</p>
+                                <hr>
+                                  <p> <b> *ผู้บันทึกข้อมูล </b> : {{ CmsHelper::Get_UserID($value->create_by)['create_by'] }} <font color = "red">( {{ CmsHelper::DateThai($value->created_at) }} | เวลา {{ CmsHelper::TimeThai($value->created_at) }} น. ) </font></p>
 
                                 <!-- <button type="button" class="btn btn-primary float-right"> บันทึกข้อมูล </button> -->
                               </div>
@@ -170,10 +186,6 @@
       </div> <!-- Row DataTable -->
 
 
-
-
-
-
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
@@ -183,7 +195,6 @@
 
 
 @section('custom-js-script')
-
 <!-- DataTables  & Plugins -->
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -197,7 +208,6 @@
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
 <script>
   $(function() {
     $("#example1").DataTable({
@@ -242,5 +252,21 @@
       </script>
     @endif
     <!-- END INSERT success -->
+
+    <!-- EDIT success -->
+      @if(Session::get('savecontract'))
+       <?php Session::forget('savecontract'); ?>
+        <script>
+          Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              // confirmButtonColor: '#3085d6',
+              timer: 2200
+          })
+        </script>
+      @endif
+      <!-- END EDIT success -->
 
 @stop

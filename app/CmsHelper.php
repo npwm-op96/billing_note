@@ -271,12 +271,12 @@ class CmsHelper
     $name_th = '';
     if (!empty($query)) {
       $id         = $query->id;
-      $name_th  = $query->name_th;
+      $fullname  = $query->name_th." ".$query->lname_th;
     }
     //--------------------------
     return array(
       "id"        => $id,
-      "create_by" => $name_th,
+      "create_by" => $fullname,
     );
   }
 

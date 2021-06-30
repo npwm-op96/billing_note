@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','เพิ่มข้อมูลเครื่องพิมพ์ / อุปกรณ์')
+@section('title','เพิ่มข้อมูลเครื่อง')
 
 <?php
   use App\CmsHelper as CmsHelper;
@@ -28,9 +28,8 @@
 
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('our.home') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"> ข้อมูลพนักงาน </li>
-            <li class="breadcrumb-item active"> เพิ่มข้อมูลอุปกรณ์ใหม่ </li>
+            <li class="breadcrumb-item"><a href="{{ route('customer.machine_copy') }}"> ข้อมูลหลัก </a></li>
+            <li class="breadcrumb-item active"> เพิ่มข้อมูลเครื่อง </li>
           </ol>
         </div>
       </div>
@@ -49,7 +48,7 @@
             <div class="col-md-12">
               <div class="card shadow">
                 <div class="card-header" style="background-color: #F0F8FF;">
-                  <h3 class="card-title"><b><i class="fas fa-file-signature"></i> เพิ่มข้อมูลเครื่องพิมพ์ / อุปกรณ์ </b></h3>
+                  <h3 class="card-title"><b><i class="fas fa-file-signature"></i> เพิ่มข้อมูลเครื่อง </b></h3>
                 </div>
 
                 <div class="card-body">
@@ -134,7 +133,7 @@
                 </div> <!-- END card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary float-right"> บันทึกข้อมูล </button>
+                  <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save"></i>&nbsp; บันทึกข้อมูล </button>
                 </div>
               </div>
             </div>

@@ -400,15 +400,15 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="exampleInputEmail1"> ช่วงวันที่ (ตั้งแต่) <font color="red"> * </font></label>
-                          <input type="text" class="form-control" name="billing_date" id="startDate" placeholder="ตั้งแต่" autocomplete="off" >
-                          <!-- <input type="text" class="clock1 form-control" name="billing_date" placeholder="เลือก ปี/เดือน/วัน" autocomplete="off"> -->
+                          <input type="date" class="form-control" name="billing_date" placeholder="ตั้งแต่" autocomplete="off">
+                          <!-- <input type="text" class="form-control" name="billing_date" id="startDate" placeholder="ตั้งแต่" autocomplete="off" > -->
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="exampleInputEmail1"> ช่วงวันที่ (จนถึง) <font color="red"> * </font></label>
-                          <input type="text" class="form-control" name="billing_date_2" id="endDate" placeholder="จนถึง" autocomplete="off">
-                          <!-- <input type="text" class="clock2 form-control" name="billing_date_2" placeholder="เลือก ปี/เดือน/วัน" autocomplete="off"> -->
+                          <input type="date" class="form-control" name="billing_date_2" placeholder="จนถึง" autocomplete="off">
+                          <!-- <input type="text" class="form-control" name="billing_date_2" id="endDate" placeholder="จนถึง" autocomplete="off"> -->
                         </div>
                       </div>
                     </div>
@@ -530,15 +530,15 @@
                         <div class="col-md-3">
                           <div class="form-group">
                             <label for="exampleInputEmail1"> ช่วงวันที่ (ตั้งแต่) <font color="red"> * </font></label>
-                            <input type="text" class="form-control" name="check_date" id="startDate2" placeholder="ตั้งแต่" autocomplete="off" >
-                            <!-- <input type="text" class="clock3 form-control" name="check_date" placeholder="เลือก ปี/เดือน/วัน" autocomplete="off"> -->
+                            <input type="date" class="form-control" name="check_date" placeholder="ตั้งแต่" autocomplete="off">
+                            <!-- <input type="text" class="form-control" name="check_date" id="startDate2" placeholder="ตั้งแต่" autocomplete="off" > -->
                           </div>
                         </div>
                         <div class="col-md-3">
                           <div class="form-group">
                             <label for="exampleInputEmail1"> ช่วงวันที่ (จนถึง) <font color="red"> * </font></label>
-                            <input type="text" class="form-control" name="check_date_2" id="endDate2" placeholder="จนถึง" autocomplete="off">
-                            <!-- <input type="text" class="clock4 form-control" name="check_date_2" placeholder="เลือก ปี/เดือน/วัน" autocomplete="off"> -->
+                            <input type="date" class="form-control" name="check_date_2" placeholder="จนถึง" autocomplete="off">
+                            <!-- <input type="text" class="form-control" name="check_date_2" id="endDate2" placeholder="จนถึง" autocomplete="off"> -->
                           </div>
                         </div>
                       </div>
@@ -569,16 +569,45 @@
                       <div class="row">
                         <div class="col-md-9">
                           <div class="form-group">
-                            <label for="expInputFile"> อัพโหลดไฟล์ </label>
+                            <label for="expInputFile"> แบบ ภ.พ.20 </label>
                             <div class="input-group">
                               <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="files" >
+                                <input type="file" class="custom-file-input" name="files" required>
                                 <label class="custom-file-label" for="expInputFile"> Upload File ขนาดไม่เกิน 5 Mb. </label>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
+
+                      <div class="row">
+                        <div class="col-md-9">
+                          <div class="form-group">
+                            <label for="expInputFile"> หนังสือรับรอง </label>
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="files_2" required>
+                                <label class="custom-file-label" for="expInputFile"> Upload File ขนาดไม่เกิน 5 Mb. </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-9">
+                          <div class="form-group">
+                            <label for="expInputFile"> เงื่อนไขการวางบิลรับเช็ค </label>
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="files_3" required>
+                                <label class="custom-file-label" for="expInputFile"> Upload File ขนาดไม่เกิน 5 Mb. </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
 
                     </div> <!-- END card-body -->
 
@@ -666,20 +695,6 @@
       );
     });
   </script>
-  <!-- <script type="text/javascript">
-    document.querySelector(".two").addEventListener('click', function(){
-      Swal.fire("Notification",
-      "หากต้องการกำหนดวันที่แน่นอน เพียงวันเดียว <br> กรุณากรอกข้อมูลในหัวข้อ <b><font color='red'> วันที่วางบิล (ตั้งแต่)* </font></b> เท่านั้น"
-      );
-    });
-  </script>
-  <script type="text/javascript">
-    document.querySelector(".three").addEventListener('click', function(){
-      Swal.fire("Notification",
-      "หากต้องการกำหนดวันที่แน่นอน เพียงวันเดียว <br> กรุณากรอกข้อมูลในหัวข้อ <b><font color='red'> วันที่รับเงิน (ตั้งแต่)* </font></b> เท่านั้น"
-      );
-    });
-  </script> -->
 <!-- END SWEET ALERT -->
 
 

@@ -162,23 +162,68 @@ class MachineController extends Controller
 
         if($insert){
           session()->put('machines', 'okkkkkayyyyy');
-          return redirect()->route('our.machine_copy', $request->id)->with('Okayyyyy');
+          return redirect()->route('customer.machine_copy', $request->id)->with('Okayyyyy');
         }else{
           return redirect()->back()->with('Errorrr');
         }
     }
 
 
+
     public function machine_edit(Request $request)
     {
+      $edit_machine = Machine_copy::where('id', $request->id)->first();
+      // dd($edit_machine);
+
+      $brands = DB::table('ref_brands')->get();
+
+      $segment = DB::table('ref_segment')->get();
+
+      $type_of_machine = [ 1 => 'new',
+                           2 => 'demo',
+                           3 => 'referbish',
+                         ];
+
+      $type_color_x_bk = [ 'B&W'    => 'B&W',
+                           'Colour' => 'Colour',
+                         ];
 
       return view('employee.machine_edit',[
-
+        'edit_machine'    =>  $edit_machine,
+        'brands'          =>  $brands,
+        'segment'         =>  $segment,
+        'type_of_machine' =>  $type_of_machine,
+        'type_color_x_bk' =>  $type_color_x_bk,
       ]);
 
     }
 
 
+
+    public function save_machine_edit(Request $request)
+    {
+      $update = DB::table('machine_copy')
+                  ->where('id', $request->id)
+                  ->update([
+                            "brands"      =>  $request->brands,
+                            "model"       =>  $request->model,
+                            "serial_no"   =>  $request->serial_no,
+                            "dno_number"  =>  $request->dno_number,
+                            "segment"     =>  $request->segment,
+                            "type_color_x_bk"  =>  $request->type_color_x_bk,
+                            "type_of_machine"  =>  $request->type_of_machine,
+                            "remark"      =>  $request->remark,
+                          ]);
+                // dd($update);
+
+      if($update){
+        session()->put('savemachines', 'okkkkkayyyyy');
+        return redirect()->route('customer.machine_copy')->with('Okayyyyy');
+      }else{
+        return redirect()->back()->with('Errorrr');
+      }
+
+    }
 
 
 

@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 <!-- Select2 -->
 <link rel="stylesheet" href="{{ asset('bower_components/select2/dist/css/select2.css') }}">
-
 @stop
 
 
@@ -34,7 +33,7 @@
         <div class="col-sm-12">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('customer.index') }}"> ข้อมูลหลัก </a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('customer.contract') }}"> สัญญาเช่าลูกค้า </a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('customer.contract') }}"> สัญญาเช่า </a></li>
             <li class="breadcrumb-item active"> เพิ่มข้อมูลสัญญา </li>
           </ol>
         </div>
@@ -54,7 +53,7 @@
             <div class="col-md-12">
               <div class="card shadow">
                 <div class="card-header" style="background-color: #FFF9F9;">
-                  <h3 class="card-title"><b><i class="fas fa-plus-circle"></i> <font color="red"> (ส่วนที่ 1) </font> : ข้อมูลสัญญาเช่าลูกค้า </b></h3>
+                  <h3 class="card-title"><b><i class="fas fa-plus-circle"></i> <font color="red"> (ส่วนที่ 1) </font> : ข้อมูลสัญญาเช่า </b></h3>
                 </div>
 
                 <div class="card-body">
@@ -62,7 +61,7 @@
                   <div class="row justify-content-end">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label> สัญญาเลขที่ </label><font color="red"> * </font>
+                        <label> เลขที่สัญญา </label><font color="red"> * </font>
                         <input type="text" class="form-control" name="contract_number" placeholder="เลขที่สัญญา" required>
                       </div>
                     </div>
@@ -74,6 +73,7 @@
                         <label> รหัสลูกค้า </label>
                         <!-- hidden ID -->
                         <input type="hidden" class="form-control" name="id" value="{{ $data->id }}">
+
                         <input type="text" class="form-control" value="{{ $data->customer_code }}" readonly>
                       </div>
                     </div>
@@ -160,19 +160,22 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label> วันที่ส่งมอบเครื่อง </label>
-                        <input type="text" class="form-control" name="carry_contract" id="datepicker1" placeholder="ปี/เดือน/วัน" autocomplete="off" required>
+                        <input type="date" class="form-control" name="carry_contract" placeholder="วัน/เดือน/ปี" autocomplete="off" required>
+                        <!-- <input type="text" class="form-control" name="carry_contract" id="datepicker1" placeholder="ปี/เดือน/วัน" autocomplete="off" required> -->
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label> วันที่เริ่มต้นสัญญา </label>
-                        <input type="text" class="form-control" name="start_contract" id="datepicker2" placeholder="ปี/เดือน/วัน" autocomplete="off" required>
+                        <input type="date" class="form-control" name="start_contract" placeholder="วัน/เดือน/ปี" autocomplete="off" required>
+                        <!-- <input type="text" class="form-control" name="start_contract" id="datepicker2" placeholder="ปี/เดือน/วัน" autocomplete="off" required> -->
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label> วันที่สิ้นสุดสัญญา </label>
-                        <input type="text" class="form-control" name="end_contract" id="datepicker3" placeholder="ปี/เดือน/วัน" autocomplete="off" required>
+                        <input type="date" class="form-control" name="end_contract" placeholder="ปี/เดือน/วัน" autocomplete="off" required>
+                        <!-- <input type="text" class="form-control" name="end_contract" id="datepicker3" placeholder="ปี/เดือน/วัน" autocomplete="off" required> -->
                       </div>
                     </div>
                   </div>
@@ -424,20 +427,6 @@
         autoclose: true,
         todayHighlight: true
     });
-    // $('#datepicker4').datepicker({
-    //     uiLibrary: 'bootstrap4',
-    //     format: 'yyyy/mm/dd',
-    //     // maxDate: today,
-    //     autoclose: true,
-    //     todayHighlight: true
-    // })
-    // $('#datepicker5').datepicker({
-    //     uiLibrary: 'bootstrap4',
-    //     format: 'yyyy/mm/dd',
-    //     // maxDate: today,
-    //     autoclose: true,
-    //     todayHighlight: true
-    // })
 
 </script>
 <!-- END DatePicker Style -->
@@ -446,70 +435,6 @@
 
 
 @section('custom-js')
-
-<script>
-    //format check event change button district and subdistrict
-    $(document).ready(function(){
-            $('#district_div').hide();
-            $('#sub_district_div').hide();
-            $(document).on('change','#province_id',function(){
-
-               var province_id=$(this).val();
-			         //console.log(cat_id);
-               var div=$(this).parent();
-               var op=" ";
-
-               $.ajax({
-                  type:'get',
-                  url:'{!!URL::to('FindDistrict')!!}',
-                  data:{'province_id':province_id},
-
-                  success:function(ref_district){
-                    //console.log('success');
-                    console.log(ref_district);
-                    op+='<option value="" disabled="true" selected="true">กรุณาเลือก</option>';
-                    for(var i=0;i<ref_district.length;i++){
-                      op+='<option value="'+ref_district[i].district_id+'">'+ref_district[i].district_name+'</option>';
-                    }
-
-                    $( "div.district_id" ).find('select').html(" ");
-                    $( "div.district_id" ).find('select').append(op);
-                    $('#district_div').show();
-                  },
-                  error:function(){
-
-                  }
-                });
-            });
-            $(document).on('change','#district_id',function () {
-                  var district_id=$(this).val();
-                  //console.log(district_id);
-                  var a=$(this).parent();
-                  var op="";
-                  $.ajax({
-                    type:'get',
-                    url:'{!!URL::to('FindSubDistrict')!!}',
-                    data:{'district_id':district_id},
-                    success:function(ref_sub_district){
-                      console.log(ref_sub_district);
-
-                      op+='<option value="" disabled="true" selected="true">กรุณาเลือก</option>';
-                      for(var i=0;i<ref_sub_district.length;i++){
-                        op+='<option value="'+ref_sub_district[i].sub_district_id+'">'+ref_sub_district[i].sub_district_name+'</option>';
-                      }
-
-                    $( "div.sub_district_id" ).find('select').html(" ");
-                    $( "div.sub_district_id" ).find('select').append(op);
-                    $('#sub_district_div').show();
-                    },
-                    error:function(){
-                    }
-                  });
-                });
-
-        });
-
-</script>
 
 <!-- Select2 -->
 <script src="{{ asset('bower_components/select2/dist/js/select2.full.js') }}"></script>
