@@ -152,7 +152,10 @@
                                         <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
                                         <p> <b>ประเภท</b> : {{ CmsHelper::Get_Customer_type($value->customer_type)['customer_type'] }} </p>
                                         <p> <b>เครดิตลูกค้า</b> : {{ $value->credit_term }} วัน</p>
-                                        <p> <b>ที่ตั้ง</b> : {{ $value->province_id }} </p>
+
+                                        <p> <b>ที่ตั้ง</b> : <font color = "red"><b> {{ $value->address }} </b></font></p>
+                                        <p> ตำบล/แขวง <font color = "red"><b> {{ CmsHelper::Get_sub_district($value->sub_district_id)['sub_district_name'] }} </b></font> อำเภอ <font color = "red"><b> {{ CmsHelper::Get_District($value->district_id)['district_name'] }} </b></font> จังหวัด <font color = "red"><b> {{ CmsHelper::Get_Province($value->province_id)['province_name'] }} </b></font></p>
+                                        <p> <b>รหัสไปรษณีย์</b> : <font color = "red"><b> {{ $value->zip_code }} </b></font></p>
                                       <hr>
                                         <p> <b><font color = "blue">วันที่วางบิล</font></b> </p>
                                         <p> <b>สถานที่วางบิล</b> : {{ $value->location_billing." ".$value->location_branch_billing }} <br>

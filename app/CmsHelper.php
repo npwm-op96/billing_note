@@ -184,85 +184,15 @@ class CmsHelper
   }
 
 
-  public static function Get_Talent_language()
-  {
-    $lists_talent = Talent::all();
-    foreach ($lists_talent as $talent_language) {
-      $arr[$talent_language->id] = $talent_language->talent_name;
-    }
-    return $arr;
-  }
 
-
-  public static function Get_Talent_Course()
-  {
-    $lists_course = TalentCourse::all();
-    foreach ($lists_course as $talent_course) {
-      $arr[$talent_course->id] = $talent_course->course;
-    }
-    return $arr;
-  }
-
-  public static function Get_List_User_TH()
-  {
-    $users_lists = User::select('id', 'name_th', 'lname_th')->get();
-    foreach ($users_lists as $users) {
-      $arr[$users->id] = trim($users->name_th) . ' ' . trim($users->lname_th);
-    }
-    return $arr;
-  }
-
-  public static function Get_Organization_TH()
-  {
-    $lists_organization = Organization::all();
-    foreach ($lists_organization as $organization_th) {
-      $arr[$organization_th->organization_id] = $organization_th->organization_name;
-    }
-    return $arr;
-  }
-
-  public static function Get_Prefix_TH()
-  {
-    $list_prefix_th = RefPrefix::all();
-    foreach ($list_prefix_th as $prefix_th) {
-      $arr[$prefix_th->id] = trim($prefix_th->name_th);
-    }
-    return $arr;
-  }
-
-  public static function Get_Prefix_EN()
-  {
-    $list_prefix_en = RefPrefix::all();
-    foreach ($list_prefix_en as $prefix_en) {
-      $arr[$prefix_en->id] = trim($prefix_en->name_en);
-    }
-    return $arr;
-  }
-
-  public static function Get_Current_Role_Group($id)
-  {
-    $model_has_row = DB::table('model_has_roles')->select('role_id')->where('model_id', $id)->first();
-    if (empty($model_has_row)) return array();
-    return $model_has_row->role_id;
-  }
-
-  public static function Get_Roles_TH2()
-  {
-    $lists_roles = Roles::all();
-    foreach ($lists_roles as $roles_th) {
-      $arr[$roles_th->id] = $roles_th->name;
-    }
-    return $arr;
-  }
-
-  public static function Province()
-  {
-    $lists_roles = Province::all();
-    foreach ($lists_roles as $roles_en) {
-      $arr[$roles_en->province_id] = $roles_en->province_name;
-    }
-    return $arr;
-  }
+  // public static function Province()
+  // {
+  //   $lists_roles = Province::all();
+  //   foreach ($lists_roles as $roles_en) {
+  //     $arr[$roles_en->province_id] = $roles_en->province_name;
+  //   }
+  //   return $arr;
+  // }
 
   public static function Get_UserID($user_id)
   {
@@ -313,39 +243,57 @@ class CmsHelper
   }
 
 
-  //Ref_Province
-  // public static function Get_Province($province_id)
-  // {
-  //   $query = Province::find($province_id);
-  //   $province_id = 0;
-  //   $province_name = '';
-  //   if ($query) {
-  //     $province_id     = $query->$province_id;
-  //     $province_name   = $query->$province_name;
-  //   }
-  //   //--------------------------
-  //   return array(
-  //     "province_id"   => $province_id,
-  //     "province_name" => $province_name,
-  //   );
-  // }
+  // Ref_Province
+  public static function Get_Province($province_id)
+  {
+    $query = DB::table('ref_province')->where('province_id', $province_id)->first();
 
-  //Ref_District
-  // public static function Province($district_id)
-  // {
-  //   $query = Position::find($district_id);
-  //   $id = 0;
-  //   $district_id = '';
-  //   if (!empty($query)) {
-  //     $district_id = $query->id;
-  //     $district_name = $query->district_id;
-  //   }
-  //   //--------------------------
-  //   return array(
-  //     "id"          => $id,
-  //     "district_id" => $district_id,
-  //   );
-  // }
+    $province_id   = 0;
+    $province_name = '';
+    if ($query) {
+      $province_id     = $query->province_id;
+      $province_name   = $query->province_name;
+    }
+    //--------------------------
+    return array(
+      "province_id"   => $province_id,
+      "province_name" => $province_name,
+    );
+  }
+
+  // Ref_District
+  public static function Get_District($district_id)
+  {
+    $query = DB::table('ref_district')->where('district_id', $district_id)->first();
+    $district_id   = 0;
+    $district_name = '';
+    if (!empty($query)) {
+      $district_id = $query->district_id;
+      $district_name = $query->district_name;
+    }
+    //--------------------------
+    return array(
+      "district_id"   => $district_id,
+      "district_name" => $district_name,
+    );
+  }
+
+  // Ref_sub_district
+  public static function Get_sub_district($sub_district_id)
+  {
+    $query = DB::table('ref_sub_district')->where('sub_district_id', $sub_district_id)->first();
+    $sub_district_id   = 0;
+    $sub_district_name = '';
+    if (!empty($query)) {
+      $sub_district_id   = $query->sub_district_id;
+      $sub_district_name = $query->sub_district_name;
+    }
+    //--------------------------
+    return array(
+      "sub_district_id"   => $sub_district_id,
+      "sub_district_name" => $sub_district_name,
+    );
+  }
 
 
 
