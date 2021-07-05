@@ -35,6 +35,8 @@ Auth::routes();
   Route::get('/machine/edit/{id}', 'MachineController@machine_edit')->name('machine.edit');
   //  -- SAVE --
   Route::post('/save-machine-edit','MachineController@save_machine_edit')->name('machine.save');
+  //  -- DELETE --
+  Route::get('/Delete-Machine/{id}', 'MachineController@delete_machine')->name('machine.delete');
 
   // --- END MACHINE-COPY ---
 
@@ -53,6 +55,8 @@ Auth::routes();
   Route::get('/customer/edit/{id}', 'HomeController@customer_edit')->name('customer.edit');
   //  -- SAVE --
   Route::post('/save-customer-edit','HomeController@save_customer_edit')->name('customer.save');
+  //  -- DELETE --
+  Route::get('/Delete-Customer/{id}', 'HomeController@delete_customer')->name('customer.delete');
   //  -- DOWNLOAD --
   // Route::get('/Download-Files/customer/{id}/{files}','HomeController@DownloadFile')->name('DownloadFile.customer');
 
@@ -72,5 +76,8 @@ Auth::routes();
   Route::get('/customer/contract-edit/{id}', 'HomeController@customer_contract_edit')->name('customer_contract.edit');
   //  -- SAVE --
   Route::post('/save-customer-contract-edit','HomeController@save_customer_contract_edit')->name('customer_contract.save');
+  //  -- DELETE --
+  Route::get('/Delete-Customer-contract/{id}', 'HomeController@delete_customer_contract')->name('customer_contract.delete');
+
 
   // --- END CUSTOMER-CONTRACT ---

@@ -103,9 +103,9 @@
                         </td>
                         <td class="text-center"> {{ $type_of_machine [$value->type_of_machine] }} </td>
                         <td class="text-center">
-                          @if($value->status == NULL)
+                          @if($value->status_contract == NULL)
                             <span class="badge bg-success badge-pill"> Active </span>
-                          @elseif($value->status == "1")
+                          @elseif($value->status_contract != NULL)
                             <span class="badge bg-secondary badge-pill"> Inactive </span>
                           @endif
                         </td>
@@ -119,39 +119,40 @@
                           <!-- END Edit -->
 
                           <!-- Delete -->
-                            <button type="button" class="btn btn-danger btn-md" title="Delete" data-toggle="modal">
+                            <button type="button" class="btn btn-danger btn-md" title="Delete" data-toggle="modal" data-target="#DeleteModalMachine{{ $value->id }}">
                               <i class="fas fa-trash-alt"></i>
                             </button>
                           <!-- END Delete -->
                         </td>
 
-
-                            <!-- MODAL StatusModal -->
-                            <div class="modal fade" id="ActiveModal{{ $value->id }}">
+                            <!-- MODAL Delete -->
+                            <div class="modal fade" id="DeleteModalMachine{{ $value->id }}">
                               <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h4 class="modal-title"><b> สถานะของเครื่อง ( ID. <font color = "red"> {{$value->id}} </font>) </b></h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
                                   <div class="modal-body">
+                                    <br>
+                                      <img class="mx-auto d-block" src="{{ asset('img/exclamation.png') }}" alt="exclamation" style="width:90px;">
+                                    <br>
+                                      <h2 class="text-center"> ต้องการลบรายการนี้ใช่ไหม ? <br> ( ID. <font color = "red"> {{ $value->id }} </font>) </h2>
+                                    <br>
+                                    <div class="text-center">
+                                      <!-- Cancel -->
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" role="button" aria-disabled="true">
+                                          <i class="fas fa-times-circle"></i> Cancel
+                                        </button>
+                                      <!-- Confirms -->
+                                      <a href="{{ route('machine.delete',['id' => $value->id]) }}">
+                                        <button type="button" class="btn btn-success" role="button" aria-disabled="true">
+                                          <i class="fas fa-trash-alt"></i> Confirms
+                                        </button>
+                                      </a>
 
-                                      <p> <b>เลข ID สัญญา</b> : {{ $value->contract_id }} </p>
-                                      <p> <b>เลขที่สัญญา</b> : {{ $value->contract_number }} </p>
-                                      <p> <b><font color = "blue">วันที่เริ่มสัญญา</font></b> : {{ CmsHelper::DateThai($value->start_contract) }} </p>
-                                      <p> <b><font color = "red">วันที่สิ้นสุดสัญญา</font></b> : {{ CmsHelper::DateThai($value->end_contract) }} </p>
-
-                                    <hr>
-                                      <p> <b>รหัสลูกค้า</b> : {{ $value->customer_code }} </p>
-                                      <p> <b>ชื่อลูกค้า / บริษัท</b> : {{ $value->customer_name }} </p>
-
+                                    </div>
                                   </div> <!-- END modal-bodyl -->
                                 </div>
                               </div>
                             </div>
-                            <!-- END MODAL StatusModal -->
+                            <!-- END MODAL Delete -->
 
                       </tr>
                       @php
@@ -218,9 +219,9 @@
                         </td>
                         <td class="text-center"> {{ $type_of_machine [$value->type_of_machine] }} </td>
                         <td class="text-center">
-                          @if($value->status == NULL)
+                          @if($value->status_contract == NULL)
                             <span class="badge bg-success badge-pill"> Active </span>
-                          @elseif($value->status == "1")
+                          @elseif($value->status_contract != NULL)
                             <span class="badge bg-secondary badge-pill"> Inactive </span>
                           @endif
                         </td>
@@ -351,20 +352,36 @@
     @endif
     <!-- END INSERT success -->
 
-    <!-- EDIT success -->
-      @if(Session::get('savemachines'))
-       <?php Session::forget('savemachines'); ?>
-        <script>
-          Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
-              showConfirmButton: false,
-              // confirmButtonColor: '#3085d6',
-              timer: 2200
-          })
-        </script>
-      @endif
-      <!-- END EDIT success -->
+  <!-- EDIT success -->
+    @if(Session::get('savemachines'))
+     <?php Session::forget('savemachines'); ?>
+      <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            // confirmButtonColor: '#3085d6',
+            timer: 2200
+        })
+      </script>
+    @endif
+    <!-- END EDIT success -->
+
+  <!-- DELETE success -->
+    @if(Session::get('deletemachines'))
+     <?php Session::forget('deletemachines'); ?>
+      <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'ลบข้อมูลเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            // confirmButtonColor: '#3085d6',
+            timer: 2200
+        })
+      </script>
+    @endif
+  <!-- END DELETE success -->
 
 @stop

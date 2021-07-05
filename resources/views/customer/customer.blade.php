@@ -129,7 +129,7 @@
                          <!-- END Edit -->
 
                          <!-- Delete -->
-                           <button type="button" class="btn btn-danger btn-md" title="Delete" data-toggle="modal">
+                           <button type="button" class="btn btn-danger btn-md" title="Delete" data-toggle="modal" data-target="#DeleteModalCustomer{{ $value->id }}">
                              <i class="fas fa-trash-alt"></i>
                            </button>
                          <!-- END Delete -->
@@ -208,6 +208,37 @@
                                 </div>
                               </div>
                               <!-- END MODAL for View -->
+
+
+
+                              <!-- MODAL Delete -->
+                              <div class="modal fade" id="DeleteModalCustomer{{ $value->id }}">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-body">
+                                      <br>
+                                        <img class="mx-auto d-block" src="{{ asset('img/exclamation.png') }}" alt="exclamation" style="width:90px;">
+                                      <br>
+                                        <h2 class="text-center"> ต้องการลบรายการนี้ใช่ไหม ? <br> ( ID. <font color = "red"> {{ $value->id }} </font>) </h2>
+                                      <br>
+                                      <div class="text-center">
+                                        <!-- Cancel -->
+                                          <button type="button" class="btn btn-danger" data-dismiss="modal" role="button" aria-disabled="true">
+                                            <i class="fas fa-times-circle"></i> Cancel
+                                          </button>
+                                        <!-- Confirms -->
+                                        <a href="{{ route('customer.delete',['id' => $value->id]) }}">
+                                          <button type="button" class="btn btn-success" role="button" aria-disabled="true">
+                                            <i class="fas fa-trash-alt"></i> Confirms
+                                          </button>
+                                        </a>
+
+                                      </div>
+                                    </div> <!-- END modal-bodyl -->
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- END MODAL Delete -->
 
 
 
@@ -290,22 +321,38 @@
         })
       </script>
     @endif
-    <!-- END INSERT success -->
+  <!-- END INSERT success -->
 
-    <!-- EDIT success -->
-      @if(Session::get('savecustomer'))
-       <?php Session::forget('savecustomer'); ?>
-        <script>
-          Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
-              showConfirmButton: false,
-              // confirmButtonColor: '#3085d6',
-              timer: 2200
-          })
-        </script>
-      @endif
-      <!-- END EDIT success -->
+  <!-- EDIT success -->
+    @if(Session::get('savecustomer'))
+     <?php Session::forget('savecustomer'); ?>
+      <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            // confirmButtonColor: '#3085d6',
+            timer: 2200
+        })
+      </script>
+    @endif
+  <!-- END EDIT success -->
+
+  <!-- DELETE success -->
+    @if(Session::get('deletecustomer'))
+     <?php Session::forget('deletecustomer'); ?>
+      <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'ลบข้อมูลเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            // confirmButtonColor: '#3085d6',
+            timer: 2200
+        })
+      </script>
+    @endif
+    <!-- END DELETE success -->
 
 @stop

@@ -46,9 +46,10 @@ class MachineController extends Controller
     public function machine_copy()
     {
 
-      $data_tbl1_machine = Machine_copy::whereNull('status')
-                                       ->whereNull('deleted_at')
-                                       ->get();
+      $data_tbl1_machine = Machine_copy::whereNull('status_contract')
+                                        ->whereNull('deleted_at')
+                                        ->get();
+
 
       $data_tbl2_machine = DB::table('customer_x_machine')
                           ->join('machine_copy', 'customer_x_machine.machine_id', '=', 'machine_copy.id')
@@ -64,7 +65,7 @@ class MachineController extends Controller
                                   'machine_copy.type_color_x_bk',
                                   'machine_copy.type_of_machine',
                                   'machine_copy.remark',
-                                  'machine_copy.status',
+                                  'machine_copy.status_contract',
                               //--------------------------------------
                                   // 'customer.id',
                                   'customer.customer_name',
@@ -80,7 +81,12 @@ class MachineController extends Controller
                                   'customer_x_machine.contract_id',
                                   'customer_x_machine.machine_id',
                                  )
+                          ->whereNull('machine_copy.deleted_at')
+                          ->whereNotNull('machine_copy.status_contract')
+                          ->whereNull('customer_x_machine.deleted_at')
                           ->get();
+
+                          // dd($data_tbl2_machine);
 
       $brands = [ 1 => 'CANON',
                   2 => 'EPSON',
@@ -222,6 +228,25 @@ class MachineController extends Controller
       }else{
         return redirect()->back()->with('Errorrr');
       }
+
+    }
+
+
+
+    public function delete_machine(Request $request)
+    {
+      $delete = Machine_copy::where('id', $request->id)
+                            ->update(["deleted_at"  =>  Carbon::now()]);
+
+      // dd($delete);
+
+      if($delete){
+        session()->put('deletemachines', 'okkkkkayyyyy');
+        return redirect()->route('customer.machine_copy')->with('Okayyyyy');
+      }else{
+        return redirect()->back()->with('Errorrr');
+      }
+      // return view('employee.machine_copy');
 
     }
 

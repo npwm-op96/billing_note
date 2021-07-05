@@ -46,16 +46,10 @@ class HomeController extends Controller
 
     public function customer(Request $request)
     {
-      $table_customer = Customer::all();
+      $table_customer = Customer::whereNull('deleted_at')->get();
 
       $province = Province::all();
       // dd($province);
-
-
-      // $edit = Customer::where('id', $request->id)->first();
-
-
-      // dd($saleman);
 
       return view('customer.customer',[
         'table_customer'  =>  $table_customer,
@@ -316,6 +310,25 @@ class HomeController extends Controller
 
 
 
+    public function delete_customer(Request $request)
+    {
+      $delete = Customer::where('id', $request->id)
+                            ->update(["deleted_at"  =>  Carbon::now()]);
+
+      // dd($delete);
+
+      if($delete){
+        session()->put('deletecustomer', 'okkkkkayyyyy');
+        return redirect()->route('customer.index')->with('Okayyyyy');
+      }else{
+        return redirect()->back()->with('Errorrr');
+      }
+
+    }
+
+
+
+
 
 
     public function customer_contract(Request $request)
@@ -350,7 +363,7 @@ class HomeController extends Controller
                                        'contract_rental.create_by',
                                        'contract_rental.created_at',
                                       )
-                              // ->groupby('customer.id', $request->id)
+                              ->whereNull('contract_rental.deleted_at')
                               ->get();
                   // dd($customer_contract);
 
@@ -467,10 +480,9 @@ class HomeController extends Controller
           ];
 
 
-        //If $insert Succuss is UPDATE machine_copy
-        DB::table('machine_copy')
-          ->where('id', $request->machine_dno_id[$i])
-          ->update(['status' => "1"]);
+        //IF $delete SUCCESS is UPDATE in table : machine_copy*****
+        Machine_copy::where('id', $request->machine_dno_id[$i])
+                    ->update(['status_contract' => $insert]);
 
       $i = $i+1;
 
@@ -529,7 +541,6 @@ class HomeController extends Controller
 
     public function save_customer_contract_edit(Request $request)
     {
-      $i = 0; //index
 
       $update_contract = DB::table('contract_rental')
                             ->where('id', $request->id)
@@ -555,16 +566,46 @@ class HomeController extends Controller
                                       "insurance_cost"      =>  $request->insurance_cost,
                                     ]);
 
-                // dd($update_contract);
 
         if($update_contract){
-
           session()->put('savecontract', 'okkkkkayyyyy');
           return redirect()->route('customer.contract')->with('Okayyyyy');
         }else{
           return redirect()->back()->with('Errorrr');
         }
     }
+
+
+
+
+    public function delete_customer_contract(Request $request)
+    {
+
+      $delete = Customer_contract::where('id', $request->id)
+                                 ->update(["deleted_at"  =>  Carbon::now()]);
+
+               // dd($delete);
+
+      if($delete){
+          //IF $delete SUCCESS is UPDATE in table : Contract_x_machine
+          Contract_x_machine::where('contract_id', $request->id)
+                            ->update([
+                                      "deleted_at" =>  Carbon::now(),
+                                    ]);
+
+
+          Machine_copy::where('status_contract', $request->id)
+                      ->update([ "status_contract"  =>  NULL ]);
+
+
+        session()->put('deletecontract', 'okkkkkayyyyy');
+        return redirect()->route('customer.contract')->with('Okayyyyy');
+      }else{
+        return redirect()->back()->with('Errorrr');
+      }
+
+    }
+
 
 
 
